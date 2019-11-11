@@ -249,3 +249,12 @@ $api->version('v1',[
     $api->post('test', 'Featurecontroller@test');
     $api->get('service/test', 'FeatureController@index');
 });
+
+
+$api->version('v1',[
+    'namespace' => 'App\Http\Controllers\Qq',
+],function ($api) {
+    //转换
+    $api->get('ques/transform', function (){dd(1);});
+}
+);
