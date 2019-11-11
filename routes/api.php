@@ -247,7 +247,7 @@ $api->version('v1',[
 ],function ($api) {
 
     //转换
-    $api->get('ques/transform', function () {
+    $api->get('qq/test', function () {
         dd(1);
     });
 }
