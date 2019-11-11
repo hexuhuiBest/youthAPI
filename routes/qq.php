@@ -20,6 +20,6 @@ $api->version('v1',[
     'namespace' => 'App\Http\Controllers\Api',
 ],function ($api) {
 //问卷调查start
-    $api->get('qq/test', dd(11)); //管理员注册
+    $api->get('qq/test', function (){dd(11);}); //管理员注册
 }
 );
