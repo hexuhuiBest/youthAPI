@@ -245,10 +245,7 @@ $api->version('v1',[
 $api->version('v1',[
     'namespace' => 'App\Http\Controllers\Qq',
 ],function ($api) {
-
     //转换
-    $api->get('qq/test', function () {
-        dd(1);
-    });
+    $api->get('qq/test', 'LoginController@index');
 }
 );
