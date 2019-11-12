@@ -17,7 +17,7 @@ class CreateQqUsersTable extends Migration
                 $table->increments('id');
                 $table->string('qqapp_openid')->nullable();
                 $table->string('qqapp_session_key')->nullable();
-                $table->string('school');
+                $table->string('school')->nullable();
                 $table->integer('offical')->nullable();
                 $table->integer('sex')->nullable();
                 $table->text('des')->nullable();
