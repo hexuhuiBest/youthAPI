@@ -35,7 +35,7 @@ class LoginController extends Controller
                 'qqapp_session_key' => $data['session_key'],
             ]);
         }
-        $token = Auth::guard('qq')->formUser($user);
+        $token = Auth::guard('qq')->fromUser($user);
 
         return $this->respondWithToken($token)->setStatusCode(200);
     }
