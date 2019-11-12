@@ -73,7 +73,7 @@ class LoginController extends Controller
         $data = array([
             'access_token' => $token,
             'token_type' => 'Bearer',
-            'expires_in' => Auth::guard('api')->factory()->getTTL() * 60,
+            'expires_in' => Auth::guard('qq')->factory()->getTTL() * 60,
         ]);
         return $this->response->array([
             'code'=>'1',
