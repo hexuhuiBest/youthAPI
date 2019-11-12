@@ -32,8 +32,9 @@ class LoginController extends Controller
         if ($res->getStatusCode() != 200) {
             return $this->response->error('源服务器错误', 500);
         }
-        $body = $res->getContents();
-        dd($body);
+        $body = $res->getbody();
+        $contents = $body->getContents();
+        dd($contents);
 
 
     }
