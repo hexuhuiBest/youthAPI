@@ -261,7 +261,7 @@ $api->version('v1',[
 // 删除token
     $api->delete('qq/authorizations/current', 'LoginController@destroy')
         ->name('qq.authorizations.destroy');
-    $api->group(['middleware' => 'qq.auth'], function($api) {
+    $api->group(['middleware' => 'api.auth'], function($api) {
         // 当前登录用户信息
         $api->get('qq/user', 'LoginController@me')
             ->name('api.user.show');
