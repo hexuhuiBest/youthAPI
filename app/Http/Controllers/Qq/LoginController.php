@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Qq;
 use App\Http\Requests\Qq\QqappAuthorizationRequest;
 use App\Http\Requests\QqBasicInfoTransformer;
 use App\Models\QqUser;
-use Dingo\Api\Auth\Auth;
+use Auth;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
