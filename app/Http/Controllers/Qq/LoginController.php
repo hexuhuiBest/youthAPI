@@ -34,7 +34,8 @@ class LoginController extends Controller
         }
         $body = $res->getbody();
         $contents = $body->getContents();
-        dd($contents);
+        $arr = json_decode($contents,true);
+        dd($arr);
 
 
     }
