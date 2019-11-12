@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Qq;
 
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use QL\QueryList;
 
 class LoginController extends Controller
 {
@@ -32,8 +33,7 @@ class LoginController extends Controller
         if ($res->getStatusCode() != 200) {
             return $this->response->error('源服务器错误', 500);
         }
-        $body = $res->getBody();
-        dd($body);
-
+        $ql =  QueryList::html($res->getBody());
+        dd($ql);
     }
 }
