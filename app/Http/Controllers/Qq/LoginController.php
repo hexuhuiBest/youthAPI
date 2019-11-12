@@ -20,7 +20,7 @@ class LoginController extends Controller
         $grant_type = 'authorization_code';
         //获取code
         $data = $this->getSession($appid,$screat,$js_code,$grant_type);//获取失败时返回code为空
-        if (isset($data['errcode'])) {
+        if ($data['errcode']!=0) {
             return $this->response->array([
                 'code' =>$data['errcode'],
                 'message'=>$data['errmsg'],
