@@ -23,8 +23,6 @@ class LoginController extends Controller
 
 
 
-
-
     protected function getSession($appid,$screat,$js_code,$grant_type)
     {
         $session_url = 'https://api.q.qq.com/sns/jscode2session?appid='.$appid.'&secret='.$screat.'&js_code='.$js_code.'&grant_type='.$grant_type;
