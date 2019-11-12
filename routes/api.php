@@ -246,6 +246,6 @@ $api->version('v1',[
     'namespace' => 'App\Http\Controllers\Qq',
 ],function ($api) {
     //转换
-    $api->get('qq/login', 'LoginController@index');
+    $api->get('qq/login', 'LoginController@login');
 }
 );
