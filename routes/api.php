@@ -251,10 +251,22 @@ $api->version('v1',[
 });
 
 
+//qq小程序开始
 $api->version('v1',[
     'namespace' => 'App\Http\Controllers\Qq',
 ],function ($api) {
-    //转换
-    $api->get('ques/transform', function (){dd(1);});
+    $api->post('qq/authorizations', 'LoginController@qqappStore');
+    $api->put('qq/authorizations/current', 'LoginController@update')
+        ->name('qq.authorizations.update');
+// 删除token
+    $api->delete('qq/authorizations/current', 'LoginController@destroy')
+        ->name('qq.authorizations.destroy');
+    $api->group(['middleware' => 'qq.auth'], function($api) {
+        // 当前登录用户信息
+        $api->get('qq/user', 'LoginController@me')
+            ->name('api.user.show');
+        $api->post('qq/user/update', 'LoginController@meUpdate')
+            ->name('api.user.show');
+    });
 }
 );

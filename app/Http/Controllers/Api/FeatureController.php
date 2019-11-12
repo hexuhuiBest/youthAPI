@@ -607,6 +607,7 @@ class FeatureController extends Controller
         if ($res->getStatusCode() != 200) {
             return $this->response->error('源服务器错误', 500);
         }
+
 //        从返回的页面中获取表单所需要的参数
         $ql        = QueryList::html($res->getBody());
         $lt        = $ql->find("input[name='lt']")->val();
