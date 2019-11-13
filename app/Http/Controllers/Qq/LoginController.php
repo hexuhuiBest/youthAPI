@@ -62,7 +62,8 @@ class LoginController extends Controller
         $info = $request->only(['school','offical','sex','des','tags','level']);
         $user ->update($info);
         if($user){
-            return $this->response->item($this->user(), new QqBasicInfoTransformer());
+            dd($user);
+//            return $this->response->item($this->user(), new QqBasicInfoTransformer());
         }else{
             return $this->respondError(-1,'更新失败请稍后重试');
         }
