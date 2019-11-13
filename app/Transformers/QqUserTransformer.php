@@ -9,7 +9,7 @@ class QqUserTransformer extends TransformerAbstract
 {
     public function transform(QqUser $user)
     {
-        $data = array([
+        return [
             'id' => $user->id,
             'school' => $user->school,
             'offical' => $user->offical,
@@ -20,11 +20,6 @@ class QqUserTransformer extends TransformerAbstract
             'last_actived_at' => $user->last_actived_at->toDateTimeString(),
             'created_at' => $user->created_at->toDateTimeString(),
             'updated_at' => $user->updated_at->toDateTimeString(),
-        ]);
-        return [
-            'code'=>1,
-            'data'=>$data,
-            'message'=>'基本信息返回成功'
         ];
     }
 }

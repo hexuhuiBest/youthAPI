@@ -62,9 +62,10 @@ class LoginController extends Controller
         $info = $request->only(['school','offical','sex','des','tags','level']);
         $user ->update($info);
         if($user){
-            return $this->response->item($this->user(), new QqUserTransformer());
+            $data = $this->response->item($this->user(), new QqUserTransformer());
+            return $this->respond(-1,'更新失败请稍后重试',$data);
         }else{
-            return $this->respondError(-1,'更新失败请稍后重试');
+            return $this->respond(-1,'更新失败请稍后重试');
         }
     }
 
@@ -83,10 +84,11 @@ class LoginController extends Controller
             'message'=>'请求成功'
         ]);
     }
-    protected function respondError($code,$message)
+    protected function respond($code,$message,$data=null)
     {
         return $this->response->array([
             'code'=>$code,
+            'data'=>$data,
             'message'=>$message
         ]);
     }
