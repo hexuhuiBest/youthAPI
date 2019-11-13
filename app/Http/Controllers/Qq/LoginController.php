@@ -58,9 +58,9 @@ class LoginController extends Controller
     }
     public function meUpdate(QqappAuthorizationRequest $request)
     {
-        dd(1);
-       $info = $request->only(['school','offical','sex','des','tags','level']);
-       $user = QqUser::update($info);
+        $user = $this->user();
+        $info = $request->only(['school','offical','sex','des','tags','level']);
+        $user ->update($info);
         if($user){
             return $this->response->item($this->user(), new QqBasicInfoTransformer());
         }else{
