@@ -105,7 +105,7 @@ return [
             'model' => App\Models\ServiceUser::class,
         ],
         'qq_users' => [
-            'driver' => 'eloquent',
+            'driver' => 'qqprogram_com',
             'model' => \App\Models\QqUser::class,
         ],
         // 'users' => [
