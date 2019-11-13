@@ -254,6 +254,7 @@ $api->version('v1',[
 //qq小程序开始
 $api->version('v1',[
     'namespace' => 'App\Http\Controllers\Qq',
+    'middleware'=>['bindings'],
 ],function ($api) {
     $api->post('qq/authorizations', 'LoginController@qqappStore');
     $api->put('qq/authorizations/current', 'LoginController@update')
