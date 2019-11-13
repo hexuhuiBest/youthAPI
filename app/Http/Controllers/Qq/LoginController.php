@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Qq;
 use App\Http\Requests\Qq\QqappAuthorizationRequest;
 use App\Http\Requests\QqBasicInfoTransformer;
 use App\Models\QqUser;
+use App\Transformers\QqUserTransformer;
 use Auth;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
@@ -53,8 +54,7 @@ class LoginController extends Controller
 
     public function me()
     {
-        dd($this->user());
-        return $this->response->item($this->user(), new QqBasicInfoTransformer());
+        return $this->response->item($this->user(), new QqUserTransformer());
     }
     public function meUpdate(QqappAuthorizationRequest $request)
     {
@@ -62,8 +62,7 @@ class LoginController extends Controller
         $info = $request->only(['school','offical','sex','des','tags','level']);
         $user ->update($info);
         if($user){
-            dd($user);
-//            return $this->response->item($this->user(), new QqBasicInfoTransformer());
+            return $this->response->item($this->user(), new QqUserTransformer());
         }else{
             return $this->respondError(-1,'更新失败请稍后重试');
         }

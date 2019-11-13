@@ -5,7 +5,7 @@ namespace App\Transformers;
 use App\Models\QqUser;
 use League\Fractal\TransformerAbstract;
 
-class UserTransformer extends TransformerAbstract
+class QqUserTransformer extends TransformerAbstract
 {
     public function transform(QqUser $user)
     {
