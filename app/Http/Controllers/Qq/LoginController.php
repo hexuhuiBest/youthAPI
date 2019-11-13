@@ -57,13 +57,14 @@ class LoginController extends Controller
     }
     public function meUpdate(QqappAuthorizationRequest $request)
     {
-       $info = $request->only(['school','offical','sex','des','tags','level']);
-       $user = QqUser::update($info);
-        if($user){
-            return $this->response->item($this->user(), new QqBasicInfoTransformer());
-        }else{
-            return $this->respondError(-1,'更新失败请稍后重试');
-        }
+        dd(1);
+//       $info = $request->only(['school','offical','sex','des','tags','level']);
+//       $user = QqUser::update($info);
+//        if($user){
+//            return $this->response->item($this->user(), new QqBasicInfoTransformer());
+//        }else{
+//            return $this->respondError(-1,'更新失败请稍后重试');
+//        }
     }
 
 
