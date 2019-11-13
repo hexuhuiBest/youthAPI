@@ -54,8 +54,9 @@ class LoginController extends Controller
 
     public function me()
     {
+        dd($this->user());
         $data = $this->response->item($this->user(), new QqUserTransformer());
-        return $this->respond(-1,'更新失败请稍后重试',$data);
+        return $this->respond(-1,'请求成功',$data);
     }
     public function meUpdate(QqappAuthorizationRequest $request)
     {
@@ -64,7 +65,7 @@ class LoginController extends Controller
         $user ->update($info);
         if($user){
             $data = $this->response->item($this->user(), new QqUserTransformer());
-            return $this->respond(-1,'更新失败请稍后重试',$data);
+            return $this->respond(1,'更新成功',$data);
         }else{
             return $this->respond(-1,'更新失败请稍后重试');
         }
