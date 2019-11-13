@@ -18,8 +18,8 @@ class QqUserTransformer extends TransformerAbstract
             'tags' => $user->tags,
             'level'=>$user->level,
             'last_actived_at' => $user->last_actived_at,
-            'created_at' => $user->created_at,
-            'updated_at' => $user->updated_at,
+            'created_at' => $user->created_at->toDateTimeString(),
+            'updated_at' => $user->updated_at->toDateTimeString(),
         ];
     }
 }
