@@ -54,7 +54,6 @@ class LoginController extends Controller
 
     public function me()
     {
-        dd($this->user());
         $data = $this->response->item($this->user(), new QqUserTransformer());
         return $this->respond(-1,'请求成功',$data);
     }
