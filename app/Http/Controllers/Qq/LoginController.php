@@ -22,10 +22,7 @@ class LoginController extends Controller
         //获取code
         $data = $this->getSession($appid,$screat,$js_code,$grant_type);//获取失败时返回code为空
         if ($data['errcode']!=0) {
-            return $this->response->array([
-                'code' =>$data['errcode'],
-                'message'=>$data['errmsg'],
-            ]);
+            return $this->respond($data['errcode'],$data['errmsg']);
         }
         //找到 openid 对应的用户
         $user = QqUser::where('qqapp_openid', $data['openid'])->first();
@@ -49,7 +46,7 @@ class LoginController extends Controller
     public function destroy()
     {
         Auth::guard('qq')->logout();
-        return $this->response->noContent();
+        return $this->respond(1,'删除成功');
     }
 
     public function me()
@@ -64,7 +61,8 @@ class LoginController extends Controller
         $info = $request->only(['school','offical','sex','des','tags','level']);
         $user ->update($info);
         if($user){
-            $data = $this->response->item($this->user(), new QqUserTransformer());
+            $data = new QqUserTransformer();
+            $data = $data->transform($this->user());
             return $this->respond(1,'更新成功',$data);
         }else{
             return $this->respond(-1,'更新失败请稍后重试');
