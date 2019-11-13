@@ -53,7 +53,7 @@ class LoginController extends Controller
 
     public function me()
     {
-        dd($this->me());
+        dd($this->user());
         return $this->response->item($this->user(), new QqBasicInfoTransformer());
     }
     public function meUpdate(QqappAuthorizationRequest $request)
