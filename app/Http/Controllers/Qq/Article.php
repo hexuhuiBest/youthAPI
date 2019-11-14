@@ -4,6 +4,10 @@ namespace App\Http\Controllers\Qq;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\QqArticle;
+use App\Models\QqUserInfo;
+use App\Models\QqUser;
+use Illuminate\Support\Facades\Validator;
 
 class Article extends Controller
 {
@@ -12,9 +16,39 @@ class Article extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    /**
+     * 获取当前用户发布过的的所有文章
+     */
     public function index()
     {
-        //
+        //找到 openid 对应的用户
+        $qqapp_openid = QqUser::where('qqapp_openid', $this->user)->first();
+        //根据个人opendid查询个人文章    返回全部
+        $data = QqUser::where('qqapp_openid', $qqapp_openid)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        foreach ($data as $key => $value) {
+            $perName = $value->name;
+            $perSchool = $value->school;
+            foreach ($value->article as $k => $val) {
+                $id = $val->id;
+                $perMsgsCont[$id] = $val->content;
+                $perMsgsType[$id] = $val->type;
+                $perMsgsTag[$id] = $val->tag;
+                $perMsgsVisi[$id] = $val->visible;
+            }
+        }
+
+        return response()->json([
+            "name" => $perName,
+            "school"=>$perSchool,
+            "content" => $perMsgsCont,
+            "type" => $perMsgsType,
+            "tag" => $perMsgsTag,
+            "visible" => $perMsgsVisi,
+            "messge" => "Get Successfully"
+        ], 200);
     }
 
     /**
@@ -35,7 +69,20 @@ class Article extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'content' => 'required|min:3',
+            'user_id' => 'required',
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        $data = QqArticle::create($request->all());
+
+        return response()->json($data, 201);
     }
 
     /**
@@ -69,7 +116,15 @@ class Article extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = QqArticle::find($id);
+
+        if (is_null($data)) {
+            return response()->json(["messg" => "Record not found"], 404);
+        }
+
+        $data->update($request->all());
+
+        return response()->json($data, 200);
     }
 
     /**
@@ -80,6 +135,14 @@ class Article extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = QqArticle::find($id);
+
+        if (is_null($data)) {
+            return response()->json(["messg" => "Record not found"], 404);
+        }
+
+        $data->delete();
+
+        return response()->json(null, 204);
     }
 }
