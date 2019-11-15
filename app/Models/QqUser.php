@@ -9,21 +9,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class QqUser extends Authenticatable implements JWTSubject
 {
     protected $table = 'qq_users';
-    protected $guarded = [
-        'id',
-        'qqapp_openid',
-        'qqapp_session_key',
-    ];
-
-    protected $fillable = [
-        'name',
-        'school',
-        'offical',
-        'sex',
-        'des',
-        'tag',
-        'level'
-    ];
+    
+    protected $guarded = ['id'];
 
     public function getJWTIdentifier()
     {

@@ -8,13 +8,7 @@ class QqArticle extends Model
 {
     protected $table = "qq_article";
 
-    protected $fillable = [
-        'content',
-        'user_id',
-        'type',
-        'tag',
-        'visible',
-    ];
+    protected $guarded = ['id'];
 
     public $timestamps = false;
 

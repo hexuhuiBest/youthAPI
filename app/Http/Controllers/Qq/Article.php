@@ -21,10 +21,10 @@ class Article extends Controller
      */
     public function index()
     {
-        //找到 openid 对应的用户
-        $qqapp_openid = QqUser::where('qqapp_openid', $this->user)->first();
+        //找到 id 对应的用户
+        $user_id = $this->user()->id;
         //根据个人opendid查询个人文章    返回全部
-        $data = QqUser::where('qqapp_openid', $qqapp_openid)
+        $data = QqArticle::where('user_id', $user_id)
             ->orderBy('created_at', 'desc')
             ->get();
 
