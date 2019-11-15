@@ -17,7 +17,7 @@ class Article extends Controller
      * @return \Illuminate\Http\Response
      */
     /**
-     * 获取当前用户发布过的的所有文章
+     * 获取当前用户发布过的的所有文章       查
      */
     public function index()
     {
@@ -42,11 +42,13 @@ class Article extends Controller
 
         return response()->json([
             "name" => $perName,
-            "school"=>$perSchool,
-            "content" => $perMsgsCont,
-            "type" => $perMsgsType,
-            "tag" => $perMsgsTag,
-            "visible" => $perMsgsVisi,
+            "school" => $perSchool,
+            "data" => [
+                "content" => $perMsgsCont,
+                "type" => $perMsgsType,
+                "tag" => $perMsgsTag,
+                "visible" => $perMsgsVisi
+            ],
             "messge" => "Get Successfully"
         ], 200);
     }
@@ -66,6 +68,9 @@ class Article extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     */
+    /**
+     * 发布文章     增
      */
     public function store(Request $request)
     {
@@ -91,9 +96,17 @@ class Article extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    /**
+     * 根据ID展示文章       查
+     */
     public function show($id)
     {
-        //
+        $data = QqArticle::find($id);
+        if (is_null($data)) {
+            return response()->json(["messg" => "Record not found"], 404);
+        }
+
+        return response()->json(QqArticle::find($id), 200);
     }
 
     /**
@@ -114,6 +127,9 @@ class Article extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    /**
+     * 更新文章     改
+     */
     public function update(Request $request, $id)
     {
         $data = QqArticle::find($id);
@@ -132,6 +148,9 @@ class Article extends Controller
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
+     */
+    /**
+     * 删除文章     删
      */
     public function destroy($id)
     {
