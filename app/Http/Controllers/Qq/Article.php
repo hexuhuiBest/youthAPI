@@ -23,7 +23,7 @@ class Article extends Controller
     {
         //找到 id 对应的用户
         $user_id = $this->user()->id;
-        //根据个人opendid查询个人文章    返回全部
+        //根据个人id查询个人文章    返回全部
         $data = QqArticle::where('user_id', $user_id)
             ->orderBy('created_at', 'desc')
             ->get();

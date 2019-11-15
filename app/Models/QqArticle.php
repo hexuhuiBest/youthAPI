@@ -18,4 +18,8 @@ class QqArticle extends Model
         return $this -> hasOne('App\Models\QqUserInfo', 'id', 'user_id');
     }
 
+    public function Qqcomment() {
+        return $this -> hasMany('App\Models\QqComment', 'article_id', 'id');
+    }
+
 }
