@@ -12,12 +12,12 @@ class QqComment extends Model
     
     public $timestamps = false;
 
-     //模型的关联操作：关联文章模型 （一对一）一个评论对于一篇文章
+     //关联文章模型 （一对一）一条评论对应一篇文章
      public function QqArticle() {
         return $this -> hasOne('App\Models\QqArticle', 'id', 'article_id');
     }
-    
-     //模型的关联操作：关联作者模型 （一对一）一个评论对应一个评论者
+
+     //关联作者模型 （一对一）一条评论对应一位评论者
      public function Qquser() {
         return $this -> hasOne('App\Models\QqUser', 'id', 'user_id');
     }

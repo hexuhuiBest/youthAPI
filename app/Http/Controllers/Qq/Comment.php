@@ -101,7 +101,7 @@ class Comment extends Controller
             $data->update($request->all());
             return response()->json($data, 200);
         } else {
-            return response()->json(['errmessg' => 'Method Not Allowed'], 405);
+            return response()->json(['errmessg' => 'Forbidden'], 403);
         }
     }
 
@@ -128,7 +128,7 @@ class Comment extends Controller
             $data->delete();
             return response()->json(null, 204);
         } else {
-            return response()->json(['errmessg' => 'Method Not Allowed'], 405);
+            return response()->json(['errmessg' => 'Forbidden'], 403);
         }
     }
 }

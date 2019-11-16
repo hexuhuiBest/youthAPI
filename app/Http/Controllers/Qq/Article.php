@@ -23,30 +23,21 @@ class Article extends Controller
     {
         //找到 id 对应的用户
         $id = $this->user()->id;
-        //根据个人id查询个人文章    返回全部
-        $data = QqUser::where('id', $id)->get();
-
-        foreach ($data as $key => $value) {
-            $perName = $value->name;
-            $perSchool = $value->school;
-            foreach ($value->article as $k => $val) {
-                $id = $val->id;
-                $perMsgsCont[$id] = $val->content;
-                $perMsgsType[$id] = $val->type;
-                $perMsgsTag[$id] = $val->tag;
-                $perMsgsVisi[$id] = $val->visible;
-            }
-        }
+        //根据个人id查询个人信息    返回全部
+        $perInfo = QqUser::where('id', $id)->get();
+        $perId = $perInfo->id;
+        $perName = $perInfo->name;
+        $perSchool = $perInfo->school;
+        $perTag = $perInfo->tags;
+        $articleData = QqArticle::where('user_id', $perId)->get();
 
         return response()->json([
-            "name" => $perName,
-            "school" => $perSchool,
-            "data" => [
-                "content" => $perMsgsCont,
-                "type" => $perMsgsType,
-                "tag" => $perMsgsTag,
-                "visible" => $perMsgsVisi
+            "perInfo" => [
+                "name" => $perName,
+                "school" => $perSchool,
+                'tag' => $perTag
             ],
+            "articleData" => $articleData,
             "messge" => "Get Successfully"
         ], 200);
     }
@@ -137,7 +128,7 @@ class Article extends Controller
             $data->update($request->all());
             return response()->json($data, 200);
         } else {
-            return response()->json(['errmessg' => 'Method Not Allowed'], 405);
+            return response()->json(['errmessg' => 'Forbidden'], 403);
         }
     }
 
@@ -157,7 +148,7 @@ class Article extends Controller
             QqArticle::find($id)->delete();
             return response()->json(null, 204);
         } else {
-            return response()->json(['errmessg' => 'Method Not Allowed'], 405);
+            return response()->json(['errmessg' => 'Forbidden'], 403);
         }
     }
 
