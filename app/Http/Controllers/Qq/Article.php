@@ -22,11 +22,9 @@ class Article extends Controller
     public function index()
     {
         //找到 id 对应的用户
-        $user_id = $this->user()->id;
+        $id = $this->user()->id;
         //根据个人id查询个人文章    返回全部
-        $data = QqArticle::where('user_id', $user_id)
-            ->orderBy('created_at', 'desc')
-            ->get();
+        $data = QqUser::where('id', $id)->get();
 
         foreach ($data as $key => $value) {
             $perName = $value->name;
@@ -101,6 +99,7 @@ class Article extends Controller
      */
     public function show($id)
     {
+        //根据id查询文章
         $data = QqArticle::find($id);
         if (is_null($data)) {
             return response()->json(["messg" => "Record not found"], 404);
@@ -132,15 +131,14 @@ class Article extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = QqArticle::find($id);
-
-        if (is_null($data)) {
-            return response()->json(["messg" => "Record not found"], 404);
+        $judgePermissionResulit = judge($id);
+        if ($judgePermissionResulit) {
+            $data = QqArticle::find($id);
+            $data->update($request->all());
+            return response()->json($data, 200);
+        } else {
+            return response()->json(['errmessg' => 'Method Not Allowed'], 405);
         }
-
-        $data->update($request->all());
-
-        return response()->json($data, 200);
     }
 
     /**
@@ -154,14 +152,31 @@ class Article extends Controller
      */
     public function destroy($id)
     {
+        $judgePermissionResulit = judge($id);
+        if ($judgePermissionResulit) {
+            QqArticle::find($id)->delete();
+            return response()->json(null, 204);
+        } else {
+            return response()->json(['errmessg' => 'Method Not Allowed'], 405);
+        }
+    }
+
+    public function judge($id)
+    {
+        //找到操作对应的用户
+        $operating_user = $this->user()->id;
+        //根据约束条件文章id 获取文章
         $data = QqArticle::find($id);
 
         if (is_null($data)) {
             return response()->json(["messg" => "Record not found"], 404);
         }
-
-        $data->delete();
-
-        return response()->json(null, 204);
+        //获取当前文章的发布者id  判断是否允许删除
+        $cur_art_pub = $data->user_id;
+        if ($operating_user == $cur_art_pub) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

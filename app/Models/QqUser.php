@@ -26,6 +26,11 @@ class QqUser extends Authenticatable implements JWTSubject
     public function QqArticle()
     {
         //第二参数为关联表字段，第三参数为本表关联字段   等号省略
-        return $this->hasMany('App\Models\QqArticle', 'user_id', 'qqapp_openid');
+        return $this->hasMany('App\Models\QqArticle', 'user_id', 'id');
+    }
+
+    //关联评论模型 一个人评论过多篇文章  再根据评论找到对应文章展示出来
+    public function QqComment() {
+        return $this->hasMany('App\Models\QqComment', 'user_id', 'id');
     }
 }
