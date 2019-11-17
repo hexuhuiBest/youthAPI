@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Qq;
 use App\Http\Requests\Qq\QqappAuthorizationRequest;
 use App\Http\Requests\QqBasicInfoTransformer;
 use App\Models\QqUser;
+use App\Models\QqUserBasic;
 use Dingo\Api\Auth\Auth;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
@@ -57,8 +58,10 @@ class LoginController extends Controller
     }
     public function meUpdate(QqappAuthorizationRequest $request)
     {
-       $info = $request->only(['school','offical','sex','des','tags','level']);
+       $info = $request->only(['name','school','offical','sex','des','tags','level']);
+       $basicInfo = $request->only(['name','school','offical','sex','des','tags','level']);
        $user = QqUser::update($info);
+       $userBasic = QqUserBasic::update($basicInfo);
         if($user){
             return $this->response->item($this->user(), new QqBasicInfoTransformer());
         }else{

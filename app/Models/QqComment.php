@@ -18,7 +18,7 @@ class QqComment extends Model
     }
 
      //关联作者模型 （一对一）一条评论对应一位评论者
-     public function Qquser() {
-        return $this -> hasOne('App\Models\QqUser', 'id', 'user_id');
+     public function QquserBasic() {
+        return $this -> hasOne('App\Models\QquserBasic', 'id', 'user_id');
     }
 }
