@@ -10,7 +10,7 @@ class QqArticleGood extends Model
 
     protected $guarded = ['id'];
 
-    //关联作者模型 （一对一）一个评论一名用户
+    //关联作者模型 （一对一）一个点赞一名用户
     public function QqUserBasic() {
         return $this -> hasOne('App\Models\QqUserBasic', 'id', 'user_id');
     }

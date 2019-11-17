@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Qq;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\QqArticle;
+use App\Models\QqArticleGood;
 use App\Models\QqUserBasic;
 use App\Models\QqUser;
 use Illuminate\Support\Facades\Validator;
@@ -22,23 +23,28 @@ class Article extends Controller
     public function index()
     {
         //找到 id 对应的用户
-        $id = $this->user()->id;
+        $operating_user = $this->user()->id;
         /**
          * 根据个人id查询个人文章    返回全部
          * $articleInfo中包含 该用户的基本信息
          * +该用户的全部文章+每一个文章的全部评论+评论者信息
-         * 注：必须foreach调用一下关联函数，否则只返回文章信息
+         * +该文章的点赞总数+（待完善 -> 点赞者信息）
+         * 注：必须foreach调用一下关联函数，直接调用无效，否则只返回文章信息
          */
-        $articleAboutInfo = QqArticle::where('user_id', $id)->get();
+        $articleAboutInfo = QqArticle::where('user_id', $operating_user)->get();
         foreach ($articleAboutInfo as $keys => $value) {
+            $currentArticleId = $value->id;
             $value->author;
+            $value->QqArticleGood;
+            $countGood[$currentArticleId] =  QqArticleGood::where('article_id', $currentArticleId)->count();
             foreach ($value->comment as $key => $val) {
                 $val->author;
             }
         }
 
         return response()->json([
-            "data" => $articleAboutInfo,
+            "articleAboutInfo" => $articleAboutInfo,
+            "countGood" => $countGood,
             "messge" => "Get Successfully"
         ], 200);
     }
