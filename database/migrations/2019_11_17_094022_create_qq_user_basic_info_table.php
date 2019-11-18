@@ -15,12 +15,14 @@ class CreateQqUserBasicInfoTable extends Migration
     {
         Schema::create('qq_user_basic_info', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('qq_nick_name');
+            $table->string('qq_avatar_url');
             $table->string('name', 20);
-            $table->string('school', 50);
+            $table->string('school');
             $table->integer('offical')->nullable();
-            $table->integer('sex')->default(1);
+            $table->integer('sex')->nullable();
             $table->text('des')->nullable();
-            $table->string('tag')->nullable();
+            $table->string('tags')->nullable();
             $table->integer('level');
             $table->date('last_actived_at');
             $table->timestamps();

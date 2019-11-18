@@ -17,6 +17,8 @@ class CreateQqUsersTable extends Migration
                 $table->increments('id');
                 $table->string('qqapp_openid')->nullable();
                 $table->string('qqapp_session_key')->nullable();
+                $table->string('qq_nick_name');
+                $table->string('qq_avatar_url');
                 $table->string('name', 20);
                 $table->string('school');
                 $table->integer('offical')->nullable();
