@@ -261,12 +261,36 @@ $api->version('v1',[
 // 删除token
     $api->delete('qq/authorizations/current', 'LoginController@destroy')
         ->name('qq.authorizations.destroy');
+
+//首页热点基础功能
+    //首页文章基本信息(文章信息+作者信息+点赞数+评论数)
+    $api->get('qq/home/basic', 'GeneralPurposeController@getHomeArticleListBasicInfo')
+        ->name('qq.home.basic');
+    //获取根据Type分类后的文章列表 返回信息上同
+    $api->get('qq/home/basic/{type}', 'GeneralPurposeController@getHomeArticleListBasicInfoByType')
+        ->name('qq.home.basic.type');
+    //单个文章评论详情信息获取(所有评论内容+发布评论内容的评论者)
+    $api->get('qq/article/comment', 'GeneralPurposeController@getArticleCommentMainInfo')
+        ->name('qq.article.comment');
+    //获取热点文章点赞的相关信息
+    $api->get('qq/article/good', 'GeneralPurposeController@getArticleGoodMainInfo')
+        ->name('qq.article.good');
+
     $api->group(['middleware' => 'qq.auth'], function($api) {
         // 当前登录用户信息
         $api->get('qq/user', 'LoginController@me')
             ->name('api.user.show');
         $api->post('qq/user/update', 'LoginController@meUpdate')
             ->name('api.user.show');
+            /**
+             * 资源路由 获取个人全部热点文章及其相关信息(get)
+             * +用户发布文章(post)+修改文章(put)+删除文章(delete)
+             */
+            Route::apiResource('article', 'Article');
+            /**
+             * 发布评论(post)+更新本人评论内容(put)+删除本人评论(delete)
+             */
+            Route::apiResource('comment', 'Comment');
     });
 }
 );

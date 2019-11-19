@@ -94,7 +94,7 @@ class Comment extends Controller
         $operating_user = $this->user()->id;
         //根据约束条件评论id 获取评论
         $data = QqComment::find($id);
-        //获取当前评论的发布者id  判断是否允许删除
+        //获取当前评论的发布者id  判断是否允许修改
         $cur_com_pub = $data->user_id;
 
         if ($operating_user == $cur_com_pub) {

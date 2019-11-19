@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\QqArticle;
 use App\Models\QqArticleGood;
 use App\Models\QqUserBasic;
-use App\Models\QqUser;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use App\Models\QqComment;
