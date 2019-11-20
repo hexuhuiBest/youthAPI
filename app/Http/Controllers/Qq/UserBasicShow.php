@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Qq;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\QqArticle;
+use App\Models\QqArticleGood;
+use App\Models\QqComment;
 use App\Models\QqFans;
-use Illuminate\Support\Facades\Validator;
 
-class Fans extends Controller
+class UserBasicShow extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,13 +19,38 @@ class Fans extends Controller
     public function index()
     {
         /**
-         * 获取个人关注列表
+         * 获取个人发布动态总数
+         * +个人关注用户总数
+         * +个人评论总数
+         * +个人赞过的文章总数
+         * +个人获赞总数
          */
-        //找到 id 对应的用户
-        // $operating_user = $this->user()->id;
-        // $data = QqFans::where('fans_id', $operating_user)
-        //     ->get();
+        //找到当前用户
+        $operating_user = $this->user()->id;
+        $dynamicTotal = QqArticle::where('user_id', $operating_user)
+            ->count();
+        $concernedTotal = QqFans::where('fans_id', $operating_user)
+            ->count();
+        $commentTotal = QqComment::where('user_id', $operating_user)
+            ->count();
+        $likeTotal = QqArticleGood::where('user_id', $operating_user)
+            ->count();
+        $articleData = QqArticle::where('user_id', $operating_user)->get();
+        $praiseCount = 0;
+        foreach ($articleData as $key => $value) {
+            $articleId = $value->id;
+            $perCount = QqArticleGood::where('id', $articleId)
+                ->count();
+            $praiseCount += $perCount;
+        }
         
+        return response()->json([
+            'dynamicTotal' => $dynamicTotal,
+            'concernedTotal' => $concernedTotal,
+            'commentTotal' => $commentTotal,
+            'likeTotal' => $likeTotal,
+            'praiseCount' => $praiseCount
+        ], 200);
     }
 
     /**
@@ -44,23 +71,7 @@ class Fans extends Controller
      */
     public function store(Request $request)
     {
-        /**
-         * user_id 为当前被关注者id   fan_id为当前操作者的id
-         */
-        $rules = [
-            'user_id' => 'required',
-            'fans_id' => 'required'
-        ];
-
-        $validator = Validator::make($request->all(), $rules);
-
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
-        }
-
-        $data = QqArticle::create($request->all());
-
-        return response()->json($data, 201);
+        //
     }
 
     /**
@@ -105,17 +116,6 @@ class Fans extends Controller
      */
     public function destroy($id)
     {
-        //传过来的参数为当前文章作者id
-        //找到操作对应的用户
-        $operating_user = $this->user()->id;
-        //检查fans表中有无信息
-        $data = QqFans::where('user_id', $id)
-            ->where('fans_id', $operating_user)
-            ->first();
-        $record_id = $data->id;
-        if (!$data) {
-            QqFans::find($record_id)->delete();
-            return response()->json(['messg' => 'Unfollow success'], 204);
-        }
+        //
     }
 }
