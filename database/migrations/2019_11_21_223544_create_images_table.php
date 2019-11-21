@@ -20,7 +20,7 @@ class CreateImagesTable extends Migration
             $table->text('path');
             $table->string('filename');
             $table->text('mini_path');
-            $table->enum('type', ['police_event', 'police_certificate','insurance_standard','insurance_payment','hospital_injury','hospital_detail','passage']);
+            $table->enum('type', ['background', 'article','avatar','loading']);
             $table->timestamps();
         });
     }
