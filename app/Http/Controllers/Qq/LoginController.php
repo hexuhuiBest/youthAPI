@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Qq;
 
 use App\Http\Requests\Qq\QqappAuthorizationRequest;
+use App\Http\Requests\Qq\QqBasicInfoRequest;
 use App\Http\Requests\QqBasicInfoTransformer;
 use App\Models\QqUser;
 
@@ -80,7 +81,7 @@ class LoginController extends Controller
         $data = $data->transform($this->user());
         return $this->respond(-1,'请求成功',$data);
     }
-    public function meUpdate(QqappAuthorizationRequest $request)
+    public function meUpdate(QqBasicInfoRequest $request)
     {
         $info = $request->only(['nickName', 'avatarUrl']);
         $basicInfo = $request->only(['nickName', 'gender', 'avatarUrl', 'language', 'city', 'province', 'country', 'name', 'school', 'offical', 'des', 'tags', 'level']);

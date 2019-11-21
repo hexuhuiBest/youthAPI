@@ -24,8 +24,7 @@ class QqBasicInfoRequest extends FormRequest
     public function rules()
     {
         return [
-            'nickName'=>'required',
-            'avatarUrl'=>'required',
+            
         ];
     }
 }
