@@ -321,10 +321,10 @@ $api->version(
         $api->get('qq/home/basic/{type}', 'GeneralPurposeController@getHomeArticleListBasicInfoByType')
             ->name('qq.home.basic.type');
         //单个文章评论详情信息获取(所有评论内容+发布评论内容的评论者)
-        $api->get('qq/article/comment', 'GeneralPurposeController@getArticleCommentMainInfo')
+        $api->get('qq/article/comment/{articleId}', 'GeneralPurposeController@getArticleCommentMainInfo')
             ->name('qq.article.comment');
         //获取热点文章点赞的相关信息
-        $api->get('qq/article/good', 'GeneralPurposeController@getArticleGoodMainInfo')
+        $api->get('qq/article/good/{articleId}', 'GeneralPurposeController@getArticleGoodMainInfo')
             ->name('qq.article.good');
 
         $api->group(['middleware' => 'qq.auth'], function ($api) {
@@ -355,10 +355,10 @@ $api->version(
             $api->get('qq/person/publish/articles', 'UserBasicShowController@getPersonallyPublishedArticles')
                 ->name('qq.person.publish.articles');
              //评论内容+评论者
-             $api->get('qq/comment/about/info', 'UserBasicShowController@getCommentAboutInfo')
+             $api->get('qq/comment/about/info/{articleId}', 'UserBasicShowController@getCommentAboutInfo')
              ->name('qq.comment.about.info');
              //点赞者信息
-             $api->get('qq/good/about/info', 'UserBasicShowController@getGoodAboutInfo')
+             $api->get('qq/good/about/info/{articleId}', 'UserBasicShowController@getGoodAboutInfo')
              ->name('qq.good.about.info');
         });
     }
