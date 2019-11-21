@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class QqUserBasic extends Model
 {
-    protected $table = 'qq_user_basic_info';
+    protected $table = 'qq_users_basic_info';
 
     protected $guarded = ['id'];
 
