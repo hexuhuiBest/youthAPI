@@ -80,7 +80,8 @@ class Article extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
-        $data = $request->only(['content','user_id'=>$this->user()->id]);
+        $data = $request->only(['content']);
+        $data['user_id'] = $this->user()->id;
         $data = QqArticle::create($data);
 
         return $this->respond(1,'创建成功',$data)->setStatusCode(200);
