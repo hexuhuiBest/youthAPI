@@ -25,7 +25,7 @@ class LoginController extends Controller
         //获取code
 
         $data = $this->getSession($appid, $screat, $js_code, $grant_type); //获取失败时返回code为空
-        if (isset($data['errcode'])) {
+        if ($data['errcode']!=0) {
             return $this->response->array([
                 'code' => $data['errcode'],
                 'message' => $data['errmsg'],
@@ -54,11 +54,11 @@ class LoginController extends Controller
         $usersBasic = QqUserBasic::update($userBasicInfo);
 
         if ($users && $usersBasic) {
-
+            dd(1);
             $token = Auth::guard('qq')->formUser($user);
             return $this->respondWithToken($token)->setStatusCode(200);
         } else {
-            return $this->respondError(-1, '更新用户失败请稍后重试');
+            return $this->respond(-1, '更新用户失败请稍后重试');
         }
     }
     public function update()
