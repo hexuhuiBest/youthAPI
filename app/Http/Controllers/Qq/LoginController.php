@@ -7,9 +7,8 @@ use App\Http\Requests\QqBasicInfoTransformer;
 use App\Models\QqUser;
 
 use App\Transformers\QqUserTransformer;
-// use Auth;
+use Auth;
 use App\Models\QqUserBasic;
-use Dingo\Api\Auth\Auth;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
