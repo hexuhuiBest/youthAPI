@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Qq;
 use App\Http\Requests\Qq\QqappAuthorizationRequest;
 use App\Http\Requests\QqBasicInfoTransformer;
 use App\Models\QqUser;
+
 use App\Transformers\QqUserTransformer;
-use Auth;
+// use Auth;
+use App\Models\QqUserBasic;
+use Dingo\Api\Auth\Auth;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
@@ -15,27 +18,48 @@ class LoginController extends Controller
     public function qqappStore(QqappAuthorizationRequest $request)
     {
         //基础信息获取
-        $appid = env('QQ_APP_ID','1109907963');
-        $screat = env('QQ_APP_SECRET','HMvNCSI92kAlxjGq');
+        $appid = env('QQ_APP_ID', '1109907963');
+        $screat = env('QQ_APP_SECRET', 'HMvNCSI92kAlxjGq');
         $js_code = $request->code;
         $grant_type = 'authorization_code';
         //获取code
-        $data = $this->getSession($appid,$screat,$js_code,$grant_type);//获取失败时返回code为空
-        if ($data['errcode']!=0) {
-            return $this->respond($data['errcode'],$data['errmsg']);
+
+        $data = $this->getSession($appid, $screat, $js_code, $grant_type); //获取失败时返回code为空
+        if (isset($data['errcode'])) {
+            return $this->response->array([
+                'code' => $data['errcode'],
+                'message' => $data['errmsg'],
+            ]);
         }
         //找到 openid 对应的用户
         $user = QqUser::where('qqapp_openid', $data['openid'])->first();
 
-        if(!$user) {
+        if (!$user) {
             $user = QqUser::create([
                 'qqapp_openid' => $data['openid'],
                 'qqapp_session_key' => $data['session_key'],
             ]);
+            QqUserBasic::create(['count' => '1']); //保持同步
         }
-        $token = Auth::guard('qq')->fromUser($user);
 
-        return $this->respondWithToken($token)->setStatusCode(200);
+        /**
+         * 登录同时更新用户昵称与头像URL
+         * 两表id一致，且都留有'nickName', 'avatarUrl'以防出错
+         */
+        
+        $userInfo = $request->only(['nickName', 'avatarUrl']);
+        $userBasicInfo = $request->only(['nickName', 'gender', 'avatarUrl', 'language', 'city', 'province', 'country']);
+        //两表同步
+        $users = QqUser::update($userInfo);
+        $usersBasic = QqUserBasic::update($userBasicInfo);
+
+        if ($users && $usersBasic) {
+
+            $token = Auth::guard('qq')->formUser($user);
+            return $this->respondWithToken($token)->setStatusCode(200);
+        } else {
+            return $this->respondError(-1, '更新用户失败请稍后重试');
+        }
     }
     public function update()
     {
@@ -57,15 +81,16 @@ class LoginController extends Controller
     }
     public function meUpdate(QqappAuthorizationRequest $request)
     {
-        $user = $this->user();
-        $info = $request->only(['school','offical','sex','des','tags','level']);
-        $user ->update($info);
-        if($user){
-            $data = new QqUserTransformer();
-            $data = $data->transform($this->user());
-            return $this->respond(1,'更新成功',$data);
-        }else{
-            return $this->respond(-1,'更新失败请稍后重试');
+
+        $info = $request->only(['nickName', 'avatarUrl']);
+        $basicInfo = $request->only(['nickName', 'gender', 'avatarUrl', 'language', 'city', 'province', 'country', 'name', 'school', 'offical', 'des', 'tags', 'level']);
+        $user = QqUser::update($info);
+        $userBasic = QqUserBasic::update($basicInfo);
+        if ($user && $userBasic) { //两者同时更新
+            return $this->response->item($this->user(), new QqBasicInfoTransformer());
+        } else {
+            return $this->respondError(-1, '更新失败请稍后重试');
+
         }
     }
 
@@ -79,11 +104,12 @@ class LoginController extends Controller
             'expires_in' => Auth::guard('qq')->factory()->getTTL() * 60,
         ]);
         return $this->response->array([
-            'code'=>'1',
-            'data'=>$data,
-            'message'=>'请求成功'
+            'code' => '1',
+            'data' => $data,
+            'message' => '请求成功'
         ]);
     }
+
     protected function respond($code,$message,$data=null)
     {
         return $this->response->array([
@@ -92,9 +118,10 @@ class LoginController extends Controller
             'message'=>$message
         ]);
     }
-    protected function getSession($appid,$screat,$js_code,$grant_type)
+
+    protected function getSession($appid, $screat, $js_code, $grant_type)
     {
-        $session_url = 'https://api.q.qq.com/sns/jscode2session?appid='.$appid.'&secret='.$screat.'&js_code='.$js_code.'&grant_type='.$grant_type;
+        $session_url = 'https://api.q.qq.com/sns/jscode2session?appid=' . $appid . '&secret=' . $screat . '&js_code=' . $js_code . '&grant_type=' . $grant_type;
         //获取session
         $client = new Client();
         $res = $client->request('GET', $session_url);
@@ -103,7 +130,7 @@ class LoginController extends Controller
         }
         $body = $res->getbody();
         $contents = $body->getContents();
-        $arr = json_decode($contents,true);
+        $arr = json_decode($contents, true);
         return $arr;
     }
 }

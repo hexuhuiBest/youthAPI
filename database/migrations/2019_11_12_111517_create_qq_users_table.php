@@ -17,12 +17,16 @@ class CreateQqUsersTable extends Migration
                 $table->increments('id');
                 $table->string('qqapp_openid')->nullable();
                 $table->string('qqapp_session_key')->nullable();
-                $table->string('school')->nullable();
-                $table->integer('offical')->nullable();
-                $table->integer('sex')->nullable();
-                $table->text('des')->nullable();
-                $table->string('tags')->nullable();
-                $table->integer('level');
+
+                $table->string('nickName')->nullable();
+                $table->string('avatarUrl')->nullable();
+                // $table->string('name', 20)->nullable();
+                // $table->string('school')->nullable();
+                // $table->integer('offical')->nullable();
+                // $table->integer('sex')->nullable();
+                // $table->text('des')->nullable();
+                // $table->string('tags')->nullable();
+                // $table->integer('level')->nullable();
                 $table->date('last_actived_at');
                 $table->timestamps();
         });
