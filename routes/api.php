@@ -327,7 +327,7 @@ $api->version(
         $api->get('qq/article/good/{articleId}', 'GeneralPurposeController@getArticleGoodMainInfo')
             ->name('qq.article.good');
 
-        $api->group(['middleware' => 'qq.auth'], function ($api) {
+        $api->group(['middleware' => 'auth:qq'], function ($api) {
             // 当前登录用户信息
             $api->get('qq/user', 'LoginController@me')
                 ->name('api.user.show');

@@ -7,6 +7,7 @@ use App\Http\Requests\QqBasicInfoTransformer;
 use App\Models\QqUser;
 
 use App\Transformers\QqUserTransformer;
+use App\User;
 use Auth;
 use App\Models\QqUserBasic;
 use GuzzleHttp\Client;
@@ -81,11 +82,12 @@ class LoginController extends Controller
     }
     public function meUpdate(QqappAuthorizationRequest $request)
     {
-
         $info = $request->only(['nickName', 'avatarUrl']);
         $basicInfo = $request->only(['nickName', 'gender', 'avatarUrl', 'language', 'city', 'province', 'country', 'name', 'school', 'offical', 'des', 'tags', 'level']);
-        $user = QqUser::update($info);
-        $userBasic = QqUserBasic::update($basicInfo);
+        $user = $this->user();
+        $userBasic = QqUserBasic::where('user_id',$user->id);
+        $user = $user->update($info);
+        $userBasic = $userBasic->update($basicInfo);
         if ($user && $userBasic) { //两者同时更新
             return $this->response->item($this->user(), new QqBasicInfoTransformer());
         } else {
