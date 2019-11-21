@@ -24,7 +24,7 @@ class QqBasicInfoRequest extends FormRequest
     public function rules()
     {
         return [
-            
+
         ];
     }
 }

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Qq;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\QqArticle;
 use App\Models\QqArticleGood;
 use App\Models\QqUserBasic;
@@ -73,8 +72,7 @@ class Article extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'content' => 'required|min:3',
-            'user_id' => 'required',
+            'content' => 'required|min:3'
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -82,10 +80,10 @@ class Article extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
+        $data = $request->only(['content','user_id'=>$this->user()->id]);
+        $data = QqArticle::create($data);
 
-        $data = QqArticle::create($request->all());
-
-        return response()->json($data, 201);
+        return $this->respond(1,'创建成功',$data)->setStatusCode(200);
     }
 
     /**
@@ -178,5 +176,13 @@ class Article extends Controller
         } else {
             return false;
         }
+    }
+    protected function respond($code,$message,$data=null)
+    {
+        return $this->response->array([
+            'code'=>$code,
+            'data'=>$data,
+            'message'=>$message
+        ]);
     }
 }

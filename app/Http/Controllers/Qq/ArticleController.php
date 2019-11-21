@@ -9,12 +9,12 @@ use App\Models\QqArticle;
 class ArticleController extends Controller
 {
     //获取全部文章列表   主页面展示
-    public function getAllArticle() {
-
-        $data = QqArticle::get();
-
-        return response()->json($data, 200);
-    }
+//    public function getAllArticle() {
+//
+//        $data = QqArticle::get();
+//
+//        return response()->json($data, 200);
+//    }
 
     //根据Type类型来分类获取对应的文章    文章分类
     public function getAllArticleByType($type) {

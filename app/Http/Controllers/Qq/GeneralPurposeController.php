@@ -18,7 +18,7 @@ class GeneralPurposeController extends Controller
      */
     public function getHomeArticleListBasicInfo()
     {
-        $ArticleListInfo = QqArticle::orderBy('id', 'DESC')->get();
+        $ArticleListInfo = QqArticle::orderBy('id', 'DESC')->paginate(15);
 
         foreach ($ArticleListInfo as $key => $value) {
             $value->author;
@@ -33,7 +33,6 @@ class GeneralPurposeController extends Controller
                 QqComment::where('article_id', $currentArticleId)
                 ->count();
         }
-
         return response()->json([
             "data" => $ArticleListInfo,
             "countGood" => $countGood,
@@ -108,5 +107,14 @@ class GeneralPurposeController extends Controller
             "data" => $currentArticleGoodAboutInfo,
             "messge" => "Get Successfully"
         ], 200);
+    }
+
+    protected function respond($code,$message,$data=null)
+    {
+        return $this->response->array([
+            'code'=>$code,
+            'data'=>$data,
+            'message'=>$message
+        ]);
     }
 }
