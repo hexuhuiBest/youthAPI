@@ -55,7 +55,7 @@ class LoginController extends Controller
 //        $usersBasic =$usersBasic->update($userBasicInfo);
 
         if ($user && $usersBasic) {
-            $token = Auth::guard('qq')->formUser($user);
+            $token = Auth::guard('qq')->fromUser($user);
             return $this->respondWithToken($token)->setStatusCode(200);
         } else {
             return $this->respond(-1, '更新用户失败请稍后重试');
