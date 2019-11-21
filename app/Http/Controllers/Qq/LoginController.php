@@ -85,15 +85,15 @@ class LoginController extends Controller
         $info = $request->only(['nickName', 'avatarUrl']);
         $basicInfo = $request->only(['nickName', 'gender', 'avatarUrl', 'language', 'city', 'province', 'country', 'name', 'school', 'offical', 'des', 'tags', 'level']);
         $user = $this->user();
-        dd(1);
         $userBasic = QqUserBasic::where('user_id',$user->id);
         $user = $user->update($info);
         $userBasic = $userBasic->update($basicInfo);
         if ($user && $userBasic) { //两者同时更新
-            return $this->response->item($this->user(), new QqBasicInfoTransformer());
+            $data = new QqUserTransformer();
+            $data = $data ->transform($this->user());
+            return $this->respon(1,'更新成功',$data);
         } else {
-            return $this->respondError(-1, '更新失败请稍后重试');
-
+            return $this->respon(-1, '更新失败请稍后重试');
         }
     }
 
