@@ -82,6 +82,7 @@ class LoginController extends Controller
     }
     public function meUpdate(QqappAuthorizationRequest $request)
     {
+        dd(1);
         $info = $request->only(['nickName', 'avatarUrl']);
         $basicInfo = $request->only(['nickName', 'gender', 'avatarUrl', 'language', 'city', 'province', 'country', 'name', 'school', 'offical', 'des', 'tags', 'level']);
         $user = $this->user();
