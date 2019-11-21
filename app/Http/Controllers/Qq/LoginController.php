@@ -91,9 +91,9 @@ class LoginController extends Controller
         if ($user && $userBasic) { //两者同时更新
             $data = new QqUserTransformer();
             $data = $data ->transform($this->user());
-            return $this->respon(1,'更新成功',$data);
+            return $this->respond(1,'更新成功',$data);
         } else {
-            return $this->respon(-1, '更新失败请稍后重试');
+            return $this->respond(-1, '更新失败请稍后重试');
         }
     }
 
