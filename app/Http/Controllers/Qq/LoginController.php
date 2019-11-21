@@ -49,13 +49,13 @@ class LoginController extends Controller
          * 两表id一致，且都留有'nickName', 'avatarUrl'以防出错
          */
         
-        $userInfo = $request->only(['nickName', 'avatarUrl']);
-        $userBasicInfo = $request->only(['nickName', 'gender', 'avatarUrl', 'language', 'city', 'province', 'country']);
+//        $userInfo = $request->only(['nickName', 'avatarUrl']);
+//        $userBasicInfo = $request->only(['nickName', 'gender', 'avatarUrl', 'language', 'city', 'province', 'country']);
         //两表同步
-        $users = $user->update($userInfo);
-        $usersBasic =$usersBasic->update($userBasicInfo);
+//        $users = $user->update($userInfo);
+//        $usersBasic =$usersBasic->update($userBasicInfo);
 
-        if ($users && $usersBasic) {
+        if ($user && $usersBasic) {
             $token = Auth::guard('qq')->formUser($user);
             return $this->respondWithToken($token)->setStatusCode(200);
         } else {
