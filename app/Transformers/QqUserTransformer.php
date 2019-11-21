@@ -10,7 +10,7 @@ class QqUserTransformer extends TransformerAbstract
 {
     public function transform(QqUser $user)
     {
-        $data = QqUserBasic::where('user_id',$user->id);
+        $data = QqUserBasic::where('user_id',$user->id)->first();
         return [
             'id' => $user->id,
             'school' => $user->school,
