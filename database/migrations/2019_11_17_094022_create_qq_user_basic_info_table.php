@@ -15,6 +15,7 @@ class CreateQqUserBasicInfoTable extends Migration
     {
         Schema::create('qq_users_basic_info', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id')->nullable();
             $table->string('count')->nullable();
             $table->string('nickName')->nullable();
             $table->integer('gender')->nullable();

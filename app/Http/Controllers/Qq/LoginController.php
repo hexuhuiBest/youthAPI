@@ -33,13 +33,15 @@ class LoginController extends Controller
         }
         //找到 openid 对应的用户
         $user = QqUser::where('qqapp_openid', $data['openid'])->first();
-
+        $usersBasic = QqUserBasic::where('user_id',$user->id);
         if (!$user) {
             $user = QqUser::create([
                 'qqapp_openid' => $data['openid'],
                 'qqapp_session_key' => $data['session_key'],
             ]);
-            QqUserBasic::create(['count' => '1']); //保持同步
+            $usersBasic = QqUserBasic::create([
+                'user_id' => $user->id
+            ]); //保持同步
         }
 
         /**
@@ -50,11 +52,10 @@ class LoginController extends Controller
         $userInfo = $request->only(['nickName', 'avatarUrl']);
         $userBasicInfo = $request->only(['nickName', 'gender', 'avatarUrl', 'language', 'city', 'province', 'country']);
         //两表同步
-        $users = QqUser::update($userInfo);
-        $usersBasic = QqUserBasic::update($userBasicInfo);
+        $users = $user->update($userInfo);
+        $usersBasic =$usersBasic->update($userBasicInfo);
 
         if ($users && $usersBasic) {
-            dd(1);
             $token = Auth::guard('qq')->formUser($user);
             return $this->respondWithToken($token)->setStatusCode(200);
         } else {
