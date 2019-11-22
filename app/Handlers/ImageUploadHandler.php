@@ -30,7 +30,7 @@ class ImageUploadHandler
             return false;
         }
         $file_orig = $file;
-        $file_orig->move($upload_path.'/orig',$filename);
+//        $file_orig->move($upload_path.'/orig',$filename);
         // 将图片移动到我们的目标存储路径中
         $file->move($upload_path, $filename);
 
@@ -43,7 +43,7 @@ class ImageUploadHandler
 
         return [
             'mini_path' => config('app.url') . "/$folder_name/$filename",
-            'path' => config('app.url') . "/$folder_name".'/orig'."/$filename"
+//            'path' => config('app.url') . "/$folder_name".'/orig'."/$filename"
         ];
     }
 
