@@ -101,7 +101,14 @@ class Article extends Controller
                 $data['user_id'] = $this->user()->id;
                 $data['filename'] = '0';
                 $picture =  Picture::create($data);
-                dd($picture);
+            }
+            if($picture){
+                $pictures['mini_path'] = $picture->mini_path;
+                $pictures['path'] = $picture->path;
+                $pictures['id'] = $picture->id;
+                return $this->respond('1','上传成功',$pictures);
+            }else{
+                return $this->respond('0','失败稍后重试');
             }
         }
     }
