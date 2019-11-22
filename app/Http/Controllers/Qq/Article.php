@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Qq;
 
+use App\Handlers\ImageUploadHandler;
+use App\Http\Requests\UserRequest;
+use App\Models\Picture;
 use Illuminate\Http\Request;
 use App\Models\QqArticle;
 use App\Models\QqArticleGood;
@@ -87,6 +90,21 @@ class Article extends Controller
         return $this->respond(1,'创建成功',$data)->setStatusCode(200);
     }
 
+    public function pictStore(ImageUploadHandler $handler,UserRequest $request)
+    {
+        if ($request->pictures) {
+            $result = $handler->save($request->pictures, $request->type, $this->user()->id,$request->max_width);
+            if ($result) {
+                $data = $request->only(['type']);
+                $data['path'] = $result['path'];
+                $data['mini_path'] = $result['mini_path'];
+                $data['user_id'] = $this->user()->id;
+                $data['name'] = '0';
+                $picture =  Picture::create($data);
+                dd($picture);
+            }
+        }
+    }
     /**
      * Display the specified resource.
      *
