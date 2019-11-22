@@ -99,7 +99,7 @@ class Article extends Controller
                 $data['path'] = $result['path'];
                 $data['mini_path'] = $result['mini_path'];
                 $data['user_id'] = $this->user()->id;
-                $data['name'] = '0';
+                $data['filename'] = '0';
                 $picture =  Picture::create($data);
                 dd($picture);
             }
