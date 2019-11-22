@@ -92,6 +92,7 @@ class Article extends Controller
 
     public function pictStore(ImageUploadHandler $handler,UserRequest $request)
     {
+        dd($request->pictures);
         if ($request->pictures) {
             $result = $handler->save($request->pictures, $request->type, $this->user()->id,$request->max_width);
             if ($result) {
