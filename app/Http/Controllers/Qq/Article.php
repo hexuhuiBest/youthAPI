@@ -94,7 +94,6 @@ class Article extends Controller
     {
         if ($request->pictures) {
             $result = $handler->save($request->pictures, $request->type, $this->user()->id,$request->max_width);
-            dd($result);
             if ($result) {
                 $data = $request->only(['type']);
                 $data['path'] = $result['path'];
