@@ -99,6 +99,7 @@ class Article extends Controller
                 }
             }
             $data=array([
+                'id'=>$data->id,
                 'content'=>$data->content,
                 'user_id'=>$data->user_id,
                 'pictures'=>$imgs
@@ -143,7 +144,7 @@ class Article extends Controller
         //根据id查询文章
         $data = QqArticle::find($id);
         if (is_null($data)) {
-            return $this->respond(1,'文章或已被删除')->setStatusCode(200);
+            return $this->respond(0,'文章或已被删除')->setStatusCode(200);
         }
         if($data){
             $imgs = array();
@@ -154,6 +155,7 @@ class Article extends Controller
                 }
             }
             $data=array([
+                'id'=>$data->id,
                 'content'=>$data->content,
                 'user_id'=>$data->user_id,
                 'pictures'=>$imgs
