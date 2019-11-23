@@ -85,6 +85,9 @@ class Article extends Controller
         }
         $data = $request->only(['content']);
         $data['user_id'] = $this->user()->id;
+        if ($request->fileList) {
+            $data['pictures'] = json_encode($request->fileList);
+        }
         $data = QqArticle::create($data);
 
         return $this->respond(1,'创建成功',$data)->setStatusCode(200);

@@ -43,7 +43,7 @@ class ImageUploadHandler
 
         return [
             'mini_path' => config('app.url') . "/$folder_name/$filename",
-            'path' => config('app.url') . "/$folder_name/$filename_1"
+//            'path' => config('app.url') . "/$folder_name/$filename_1"
         ];
     }
 
