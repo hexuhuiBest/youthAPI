@@ -59,7 +59,7 @@ class Article extends Controller
     public function articleList()
     {
         $article = new QqArticle();
-        $article = $article->orderBy('crash_time','DESC')->paginate(10);
+        $article = $article->orderBy('created_at','DESC')->paginate(10);
         return $this->response->paginator($article, new ArticleTransformer());
     }
 
