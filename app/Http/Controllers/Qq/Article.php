@@ -159,7 +159,7 @@ class Article extends Controller
                 'pictures'=>$imgs
             ]);
         }
-        return $this->respond(1,'创建成功',$data)->setStatusCode(200);
+        return $this->respond(1,'返回成功',$data)->setStatusCode(200);
     }
 
     /**
