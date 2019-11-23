@@ -3,16 +3,13 @@
 namespace App\Transformers;
 
 use App\Http\Controllers\Qq\Article;
-use App\Models\Event;
-use App\Models\Image;
-use App\Models\Party;
-use App\Models\Salvation;
+use App\Models\QqArticle;
 use Doctrine\DBAL\Schema\Schema;
 use League\Fractal\TransformerAbstract;
 
 class ArticleTransformer extends TransformerAbstract
 {
-    public function transform(Article $article)
+    public function transform(QqArticle $article)
     {
         return [
             'id' => $article->id,
