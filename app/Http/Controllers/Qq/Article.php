@@ -85,7 +85,7 @@ class Article extends Controller
         }
         $data = $request->only(['content']);
         $data['user_id'] = $this->user()->id;
-        if ($request->fileList) {
+        if ($request->pictures) {
             $data['pictures'] = json_encode($request->pictures);
         }
         $data = QqArticle::create($data);
