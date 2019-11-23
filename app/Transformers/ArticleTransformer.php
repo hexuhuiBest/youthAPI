@@ -5,6 +5,7 @@ namespace App\Transformers;
 use App\Http\Controllers\Qq\Article;
 use App\Models\Picture;
 use App\Models\QqArticle;
+use App\Models\QqUser;
 use Doctrine\DBAL\Schema\Schema;
 use League\Fractal\TransformerAbstract;
 
@@ -15,11 +16,16 @@ class ArticleTransformer extends TransformerAbstract
         return [
             'id' => $article->id,
             'content'=>$article->content,
-            'user_id'=>$article->user_id,
+            'user_id'=>$this->users($article->user_id),
             'pictures' => $this->ImgTransformer($article->pictures),
             ];
     }
-
+    public function users(QqUser $imga){
+        return [
+            'nickname'=>$imga->nickName,
+            'avatarUrl'=>$imga->avatarUrl
+        ];
+    }
     public function ImgTransformer($imga)
     {
         $array = [];
