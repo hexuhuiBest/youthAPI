@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Qq;
 
 use App\Handlers\ImageUploadHandler;
 use App\Http\Requests\UserRequest;
+use App\Models\Image;
 use App\Models\Picture;
 use Illuminate\Http\Request;
 use App\Models\QqArticle;
@@ -89,7 +90,20 @@ class Article extends Controller
             $data['pictures'] = json_encode($request->pictures);
         }
         $data = QqArticle::create($data);
-
+        if($data){
+            $imgs = array();
+            if($data->pictures){
+                foreach (json_decode($data->pictures) as $key=>$item){
+                    $img = Image::find($item);
+                    $imgs[$key] = $img->path;
+                }
+            }
+            $data=array([
+                'content'=>$data->content,
+                'user_id'=>$data->user_id,
+                'pictures'=>$imgs
+            ]);
+        }
         return $this->respond(1,'创建成功',$data)->setStatusCode(200);
     }
 
