@@ -20,7 +20,8 @@ class ArticleTransformer extends TransformerAbstract
             'pictures' => $this->ImgTransformer($article->pictures),
             ];
     }
-    public function users(QqUser $imga){
+    public function users($imga){
+        $imga = QqUser::find($imga);
         return [
             'nickname'=>$imga->nickName,
             'avatarUrl'=>$imga->avatarUrl
