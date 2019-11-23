@@ -22,9 +22,11 @@ class ArticleTransformer extends TransformerAbstract
     public function ImgTransformer($imga)
     {
         $array = [];
-        foreach (json_decode($imga) as $key=>$item){
-            $img = Picture::find($item);
-            $imgs[$key] = $img->path;
+        if(!is_null($imga)) {
+            foreach (json_decode($imga) as $key => $item) {
+                $img = Picture::find($item);
+                $imgs[$key] = $img->path;
+            }
         }
         return $array;
     }
