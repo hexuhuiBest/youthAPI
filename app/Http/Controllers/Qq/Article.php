@@ -100,7 +100,7 @@ class Article extends Controller
             if ($result) {
                 $data = $request->only(['type']);
                 $data['path'] = $result['path'];
-                $data['mini_path'] = $result['mini_path'];
+//                $data['mini_path'] = $result['mini_path'];
                 $data['user_id'] = $this->user()->id;
                 $data['filename'] = '0';
                 $picture =  Picture::create($data);

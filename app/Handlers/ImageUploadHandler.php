@@ -33,7 +33,7 @@ class ImageUploadHandler
 //        $file_orig->move($upload_path.'/orig',$filename);
         // 将图片移动到我们的目标存储路径中
         $file->move($upload_path, $filename);
-        $copy = copy($upload_path.'/'.$filename,$upload_path.'/'.$filename_1);
+//        $copy = copy($upload_path.'/'.$filename,$upload_path.'/'.$filename_1);
         // 如果限制了图片宽度，就进行裁剪
         if ($max_width && $extension != 'gif') {
 
@@ -42,7 +42,7 @@ class ImageUploadHandler
         }
 
         return [
-            'mini_path' => config('app.url') . "/$folder_name/$filename",
+            'path' => config('app.url') . "/$folder_name/$filename",
 //            'path' => config('app.url') . "/$folder_name/$filename_1"
         ];
     }
