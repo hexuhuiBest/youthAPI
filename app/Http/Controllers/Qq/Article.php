@@ -94,7 +94,7 @@ class Article extends Controller
             $imgs = array();
             if($data->pictures){
                 foreach (json_decode($data->pictures) as $key=>$item){
-                    $img = Image::find($item);
+                    $img = Picture::find($item);
                     $imgs[$key] = $img->path;
                 }
             }
