@@ -60,7 +60,8 @@ class Article extends Controller
     {
         $article = new QqArticle();
         $article = $article->orderBy('created_at','DESC')->paginate(10);
-        return $this->response->paginator($article, new ArticleTransformer());
+//        $data = new ArticleTransformer();
+        dd($this->response->paginator($article, new ArticleTransformer()));
     }
 
     /**
