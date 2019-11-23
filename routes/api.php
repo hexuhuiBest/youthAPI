@@ -339,7 +339,7 @@ $api->version(
                 ->name('api.user.show');
             $api->get('qq/article/show/{id}', 'Article@show')
                 ->name('api.user.show');
-            $api->get('qq/article/show/list', 'Article@articleList')
+            $api->get('qq/article/list/show', 'Article@articleList')
                 ->name('api.user.show');
 
             /**
