@@ -12,13 +12,13 @@ use League\Fractal\TransformerAbstract;
 
 class ArticleTransformer extends TransformerAbstract
 {
-    public function transform(Article $event)
+    public function transform(Article $article)
     {
         return [
-            'id' => $event->id,
-            'content'=>$event->content,
-            'user_id'=>$event->user_id,
-            'pictures' => $this->ImgTransformer($event->pictures),
+            'id' => $article->id,
+            'content'=>$article->content,
+            'user_id'=>$article->user_id,
+            'pictures' => $article->ImgTransformer($article->pictures),
             ];
     }
 
