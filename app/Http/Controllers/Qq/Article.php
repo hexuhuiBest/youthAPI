@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Qq;
 
 use App\Handlers\ImageUploadHandler;
 use App\Http\Requests\UserRequest;
+use App\Models\Artical;
 use App\Models\Image;
 use App\Models\Picture;
+use App\Transformers\ArticleTransformer;
 use Illuminate\Http\Request;
 use App\Models\QqArticle;
 use App\Models\QqArticleGood;
@@ -52,6 +54,13 @@ class Article extends Controller
             "countGood" => $countGood,
             "messge" => "Get Successfully"
         ], 200);
+    }
+
+    public function articleList()
+    {
+        $article = new Artical();
+        $article = $article->orderBy('crash_time','DESC')->paginate(10);
+        return $this->response->paginator($article, new ArticleTransformer());
     }
 
     /**

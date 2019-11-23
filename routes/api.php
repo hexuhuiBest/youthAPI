@@ -339,6 +339,9 @@ $api->version(
                 ->name('api.user.show');
             $api->get('qq/article/show/{id}', 'Article@show')
                 ->name('api.user.show');
+            $api->get('qq/article/show/list', 'Article@articleList')
+                ->name('api.user.show');
+
             /**
              * 资源路由 获取个人全部热点文章及其相关信息(get) <--注：暂时不用  处理数据过多  已经转由分步请求
              * +用户发布文章(post)+修改文章(put)+删除文章(delete)
