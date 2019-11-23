@@ -15,7 +15,7 @@ class ArticleTransformer extends TransformerAbstract
             'id' => $article->id,
             'content'=>$article->content,
             'user_id'=>$article->user_id,
-            'pictures' => $article->ImgTransformer($article->pictures),
+            'pictures' => $this->ImgTransformer($article->pictures),
             ];
     }
 
