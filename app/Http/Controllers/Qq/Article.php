@@ -145,8 +145,21 @@ class Article extends Controller
         if (is_null($data)) {
             return response()->json(["messg" => "Record not found"], 404);
         }
-
-        return response()->json(QqArticle::find($id), 200);
+        if($data){
+            $imgs = array();
+            if($data->pictures){
+                foreach (json_decode($data->pictures) as $key=>$item){
+                    $img = Picture::find($item);
+                    $imgs[$key] = $img->path;
+                }
+            }
+            $data=array([
+                'content'=>$data->content,
+                'user_id'=>$data->user_id,
+                'pictures'=>$imgs
+            ]);
+        }
+        return $this->respond(1,'创建成功',$data)->setStatusCode(200);
     }
 
     /**
@@ -182,6 +195,10 @@ class Article extends Controller
         }
     }
 
+    public function dataTotype($data)
+    {
+
+    }
     /**
      * Remove the specified resource from storage.
      *
