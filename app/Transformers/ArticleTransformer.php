@@ -3,6 +3,7 @@
 namespace App\Transformers;
 
 use App\Http\Controllers\Qq\Article;
+use App\Models\Picture;
 use App\Models\QqArticle;
 use Doctrine\DBAL\Schema\Schema;
 use League\Fractal\TransformerAbstract;
