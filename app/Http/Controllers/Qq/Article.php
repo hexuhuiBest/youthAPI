@@ -28,17 +28,6 @@ class Article extends Controller
      */
     public function index()
     {
-        //找到 id 对应的用户
-        $operating_user = $this->user()->id;
-        /**
-         * 根据个人id查询个人文章    返回全部
-         * $articleInfo中包含 该用户的基本信息
-         * +该用户的全部文章+每一个文章的全部评论+评论者信息
-         * +该文章的点赞总数+（待完善 -> 点赞者信息）
-         * 注：必须foreach调用一下关联函数，直接调用无效，否则只返回文章信息
-         * 注意：已鸡肋 目前采取方法不是一次性返回  而是分多次 
-         * 功能转 UserBasicShow与UserBasicShowController
-         */
         $articleAboutInfo = QqArticle::where('user_id', $operating_user)->get();
         foreach ($articleAboutInfo as $keys => $value) {
             $currentArticleId = $value->id;
@@ -146,7 +135,7 @@ class Article extends Controller
     }
     public function update(ArticalUpdateRequest $request)
     {
-        $data = QqArticle::find($request->id)->first();
+        $data = QqArticle::find($request->id);
         if ($data) {
             dd($data);
             if ($data->user_id==$this->user()->id) {
