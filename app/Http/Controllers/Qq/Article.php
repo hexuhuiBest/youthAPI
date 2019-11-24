@@ -141,6 +141,8 @@ class Article extends Controller
                 $date = $request->only(['content']);
                 if ($request->pictures) {
                     $date['pictures'] = json_encode($request->pictures);
+                }else{
+                    $data['pictures']=null;
                 }
                 $data = $data->update($date);
                 if($data){
