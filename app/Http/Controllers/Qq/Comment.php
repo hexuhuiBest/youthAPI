@@ -51,7 +51,7 @@ class Comment extends Controller
     {
         $data = $request->only(['content','article_id']);
         $data['user_id'] = $this->user()->id;
-        $data = QqComment::create($request->all());
+        $data = QqComment::create($data);
 
         return $this->respond(1,'评论成功',$data);
     }
