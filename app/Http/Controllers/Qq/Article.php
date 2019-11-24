@@ -64,6 +64,9 @@ class Article extends Controller
             return response()->json($validator->errors(), 400);
         }
         $data = $request->only(['content']);
+        if($request->type){
+            $data['type'] = $request->type;
+        }
         $data['user_id'] = $this->user()->id;
         if ($request->pictures) {
             $data['pictures'] = json_encode($request->pictures);
@@ -143,6 +146,9 @@ class Article extends Controller
                     $date['pictures'] = json_encode($request->pictures);
                 }else{
                     $data['pictures']=null;
+                }
+                if($request->type){
+                    $data['type']=$request->type;
                 }
                 $data = $data->update($date);
                 if($data){
