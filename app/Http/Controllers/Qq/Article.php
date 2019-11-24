@@ -145,7 +145,7 @@ class Article extends Controller
                 $data = $data->update($date);
                 if($data){
                     $imgs = array();
-                    dd($data);
+                    $data = QqArticle::find($request->id);
                     if($data->pictures){
                         foreach (json_decode($data->pictures) as $key=>$item){
                             $img = Picture::find($item);
