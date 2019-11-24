@@ -8,6 +8,7 @@ use App\Http\Requests\UserRequest;
 use App\Models\Artical;
 use App\Models\Image;
 use App\Models\Picture;
+use App\Models\QqComment;
 use App\Transformers\ArticleTransformer;
 use Illuminate\Http\Request;
 use App\Models\QqArticle;
@@ -26,25 +27,25 @@ class Article extends Controller
     /**
      * 获取当前用户发布过的的所有文章       查
      */
-    public function index()
-    {
-        $articleAboutInfo = QqArticle::where('user_id', $operating_user)->get();
-        foreach ($articleAboutInfo as $keys => $value) {
-            $currentArticleId = $value->id;
-            $value->author;
-            $value->QqArticleGood;
-            $countGood[$currentArticleId] =  QqArticleGood::where('article_id', $currentArticleId)->count();
-            foreach ($value->comment as $key => $val) {
-                $val->author;
-            }
-        }
-
-        return response()->json([
-            "articleAboutInfo" => $articleAboutInfo,
-            "countGood" => $countGood,
-            "messge" => "Get Successfully"
-        ], 200);
-    }
+//    public function index()
+//    {
+//        $articleAboutInfo = QqArticle::where('user_id', $operating_user)->get();
+//        foreach ($articleAboutInfo as $keys => $value) {
+//            $currentArticleId = $value->id;
+//            $value->author;
+//            $value->QqArticleGood;
+//            $countGood[$currentArticleId] =  QqArticleGood::where('article_id', $currentArticleId)->count();
+//            foreach ($value->comment as $key => $val) {
+//                $val->author;
+//            }
+//        }
+//
+//        return response()->json([
+//            "articleAboutInfo" => $articleAboutInfo,
+//            "countGood" => $countGood,
+//            "messge" => "Get Successfully"
+//        ], 200);
+//    }
 
     public function articleList()
     {
@@ -127,11 +128,17 @@ class Article extends Controller
                     $imgs[$key] = $img->path;
                 }
             }
+            $comments = array();
+            $comment = QqComment::where('article_id',$id)->get();
+            if($comment){
+                $comments = $comment;
+            }
             $data=array([
                 'id'=>$data->id,
                 'content'=>$data->content,
                 'user_id'=>$data->user_id,
-                'pictures'=>$imgs
+                'pictures'=>$imgs,
+                'comment'=>$comments
             ]);
         }
         return $this->respond(1,'返回成功',$data)->setStatusCode(200);

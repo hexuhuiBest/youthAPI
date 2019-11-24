@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Qq;
 
+use App\Http\Requests\CommentRequest;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\QqArticle;
 use App\Models\QqComment;
 use App\Models\QqUser;
@@ -30,7 +30,14 @@ class Comment extends Controller
     {
         //
     }
-
+    protected function respond($code,$message,$data=null)
+    {
+        return $this->response->array([
+            'code'=>$code,
+            'data'=>$data,
+            'message'=>$message
+        ]);
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -40,23 +47,13 @@ class Comment extends Controller
     /**
      * 发布评论  content user_id article_id三个字段必须 成功返回评论内容及id
      */
-    public function store(Request $request)
+    public function store(CommentRequest $request)
     {
-        $rules = [
-            'content' => 'required',
-            'user_id' => 'required',
-            'article_id' => 'required'
-        ];
-
-        $validator = Validator::make($request->all(), $rules);
-
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
-        }
-
+        $data = $request->only(['content','article_id']);
+        $data['user_id'] = $this->user()->id;
         $data = QqComment::create($request->all());
 
-        return response()->json($data, 201);
+        return $this->respond(1,'评论成功',$data);
     }
 
     /**
