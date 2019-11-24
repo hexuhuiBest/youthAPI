@@ -5,6 +5,7 @@ namespace App\Transformers;
 use App\Http\Controllers\Qq\Article;
 use App\Models\Picture;
 use App\Models\QqArticle;
+use App\Models\QqComment;
 use App\Models\QqUser;
 use Doctrine\DBAL\Schema\Schema;
 use League\Fractal\TransformerAbstract;
@@ -18,6 +19,8 @@ class ArticleTransformer extends TransformerAbstract
             'content'=>$article->content,
             'user_id'=>$this->users($article->user_id),
             'pictures' => $this->ImgTransformer($article->pictures),
+            'count_comment'=>count(QqComment::where('article_id',$article->id)->get()),
+            'count_zan'=>null
             ];
     }
     public function users($imga){
