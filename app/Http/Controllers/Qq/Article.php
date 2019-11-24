@@ -148,7 +148,7 @@ class Article extends Controller
     {
         $data = QqArticle::find($request->id)->first();
         if ($data) {
-            dd($data->user_id);
+            dd($data);
             if ($data->user_id==$this->user()->id) {
                 $date = $request->only(['content']);
                 if ($request->pictures) {
