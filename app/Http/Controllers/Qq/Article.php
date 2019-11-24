@@ -169,23 +169,27 @@ class Article extends Controller
                 }
                 return $this->respond(1,'成功更新',$data)->setStatusCode(200);
             }else{
-                return $this->respond('0','无权限修改');
+                return $this->respond('0','无权限修改')->setStatusCode(200);
             }
         }
 
     }
 
-    public function destroy($id)
+    public function delete($id)
     {
-        $judgePermissionResulit = judge($id);
-        if ($judgePermissionResulit) {
-            QqArticle::find($id)->delete();
-            return response()->json(null, 204);
-        } else {
-            return response()->json(['errmessg' => 'Forbidden'], 403);
+
+        $data = QqArticle::find($id);
+        if ($data) {
+            if ($data->user_id == $this->user()->id) {
+                $data = $data->delete();
+                if($data){
+                    return $this->respond(1,'删除成功')->setStatusCode(200);
+                }
+            }else{
+                return $this->respond(0,'无权限修改')->setStatusCode(200);
+            }
         }
     }
-
 //    public function judge($id)
 //    {
 //        //找到操作对应的用户
