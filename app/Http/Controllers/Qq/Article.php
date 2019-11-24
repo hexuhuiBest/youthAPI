@@ -63,26 +63,6 @@ class Article extends Controller
         $article = $article->orderBy('created_at','DESC')->paginate(10);
         return $this->response->paginator($article, new ArticleTransformer());
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    /**
-     * 发布文章     增
-     */
     public function store(Request $request)
     {
         $rules = [
@@ -140,15 +120,6 @@ class Article extends Controller
             }
         }
     }
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    /**
-     * 根据ID展示文章       查
-     */
     public function show($id)
     {
         //根据id查询文章
@@ -173,34 +144,11 @@ class Article extends Controller
         }
         return $this->respond(1,'返回成功',$data)->setStatusCode(200);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    /**
-     * 更新文章     改
-     */
     public function update(ArticalUpdateRequest $request)
     {
         $data = QqArticle::find($request->id)->first();
         if ($data) {
-            $judge = $this->judge($data->user_id);
-            if ($judge) {
+            if ($data->user_id==$this->user()->id) {
                 $date = $request->only(['content']);
                 if ($request->pictures) {
                     $date['pictures'] = json_encode($request->pictures);
@@ -229,28 +177,6 @@ class Article extends Controller
 
     }
 
-    public function judge($id)
-    {
-        if($id==$this->user()->id){
-            return 1;
-        }else{
-            return 0;
-        }
-    }
-
-    public function dataTotype($data)
-    {
-
-    }
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    /**
-     * 删除文章     删
-     */
     public function destroy($id)
     {
         $judgePermissionResulit = judge($id);
