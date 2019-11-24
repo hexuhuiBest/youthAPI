@@ -26,8 +26,8 @@ class ArticleTransformer extends TransformerAbstract
     public function users($imga){
         $imga = QqUser::find($imga);
         return [
-//            'nickname'=>is_null($imga->nickName)?$imga->nickName:null,
-//            'avatarUrl'=>is_null($imga->avatarUrl)?$imga->avatarUrl:null
+            'nickname'=>is_null($imga->nickName)?null:$imga->nickName,
+            'avatarUrl'=>is_null($imga->avatarUrl)?null:$imga->avatarUrl
         ];
     }
     public function ImgTransformer($imga)
