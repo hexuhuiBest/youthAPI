@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Qq;
 
 use App\Handlers\ImageUploadHandler;
+use App\Http\Requests\ArticalUpdateRequest;
 use App\Http\Requests\UserRequest;
 use App\Models\Artical;
 use App\Models\Image;
@@ -194,15 +195,46 @@ class Article extends Controller
     /**
      * 更新文章     改
      */
-    public function update(Request $request, $id)
+    public function update(ArticalUpdateRequest $request)
     {
-        $judgePermissionResulit = judge($id);
-        if ($judgePermissionResulit) {
-            $data = QqArticle::find($id);
-            $data->update($request->all());
-            return response()->json($data, 200);
-        } else {
-            return response()->json(['errmessg' => 'Forbidden'], 403);
+        $data = QqArticle::find($request->id)->first();
+        if ($data) {
+            $judge = $this->judge($data->user_id);
+            if ($judge) {
+                $date = $request->only(['content']);
+                if ($request->pictures) {
+                    $date['pictures'] = json_encode($request->pictures);
+                }
+                $data = $data->update($date);
+                if($data){
+                    $imgs = array();
+                    if($data->pictures){
+                        foreach (json_decode($data->pictures) as $key=>$item){
+                            $img = Picture::find($item);
+                            $imgs[$key] = $img->path;
+                        }
+                    }
+                    $data=array([
+                        'id'=>$data->id,
+                        'content'=>$data->content,
+                        'user_id'=>$data->user_id,
+                        'pictures'=>$imgs
+                    ]);
+                }
+                return $this->respond(1,'成功更新',$data)->setStatusCode(200);
+            }else{
+                return $this->respond('0','无权限修改');
+            }
+        }
+
+    }
+
+    public function judge($id)
+    {
+        if($id==$this->user()->id){
+            return 1;
+        }else{
+            return 0;
         }
     }
 
@@ -230,24 +262,24 @@ class Article extends Controller
         }
     }
 
-    public function judge($id)
-    {
-        //找到操作对应的用户
-        $operating_user = $this->user()->id;
-        //根据约束条件文章id 获取文章
-        $data = QqArticle::find($id);
-
-        if (is_null($data)) {
-            return response()->json(["messg" => "Record not found"], 404);
-        }
-        //获取当前文章的发布者id  判断是否允许删除
-        $cur_art_pub = $data->user_id;
-        if ($operating_user == $cur_art_pub) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+//    public function judge($id)
+//    {
+//        //找到操作对应的用户
+//        $operating_user = $this->user()->id;
+//        //根据约束条件文章id 获取文章
+//        $data = QqArticle::find($id);
+//
+//        if (is_null($data)) {
+//            return response()->json(["messg" => "Record not found"], 404);
+//        }
+//        //获取当前文章的发布者id  判断是否允许删除
+//        $cur_art_pub = $data->user_id;
+//        if ($operating_user == $cur_art_pub) {
+//            return true;
+//        } else {
+//            return false;
+//        }
+//    }
     protected function respond($code,$message,$data=null)
     {
         return $this->response->array([

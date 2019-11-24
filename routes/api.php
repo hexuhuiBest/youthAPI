@@ -335,8 +335,11 @@ $api->version(
                 ->name('api.user.show');
             $api->post('qq/article/create', 'Article@store')
                 ->name('api.user.show');
+            $api->post('qq/article/update', 'Article@update')
+                ->name('api.user.show');
             $api->post('qq/picture', 'Article@pictStore')
                 ->name('api.user.show');
+
             $api->get('qq/article/show/{id}', 'Article@show')
                 ->name('api.user.show');
             $api->get('qq/article/list/show', 'Article@articleList')
