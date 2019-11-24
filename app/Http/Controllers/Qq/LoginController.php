@@ -34,7 +34,7 @@ class LoginController extends Controller
         }
         //找到 openid 对应的用户
         $user = QqUser::where('qqapp_openid', $data['openid'])->first();
-        if(!$user){
+        if($user){
             $usersBasic = QqUserBasic::where('user_id',$user->id)->first();
         }else{
             $usersBasic = null;
