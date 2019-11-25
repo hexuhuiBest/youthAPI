@@ -5,8 +5,10 @@ namespace App\Transformers;
 use App\Http\Controllers\Qq\Article;
 use App\Models\Picture;
 use App\Models\QqArticle;
+use App\Models\QqArticleGood;
 use App\Models\QqComment;
 use App\Models\QqUser;
+use Dingo\Api\Auth\Auth;
 use Doctrine\DBAL\Schema\Schema;
 use League\Fractal\TransformerAbstract;
 
@@ -20,12 +22,14 @@ class ArticleTransformer extends TransformerAbstract
             'user_id'=>$this->users($article->user_id),
             'pictures' => $this->ImgTransformer($article->pictures),
             'count_comment'=>count(QqComment::where('article_id',$article->id)->get()),
-            'count_zan'=>null
+            'count_zan'=>count(QqArticleGood::where('article_id',$article->id)->get()),
+            'is_zan'=>QqArticleGood::where('user_id',Auth::guard('qq')->user())
             ];
     }
     public function users($imga){
         $imga = QqUser::find($imga);
         return [
+            'user_id'=>$imga->id,
             'nickname'=>$imga->nickName,
             'avatarUrl'=>$imga->avatarUrl
         ];
