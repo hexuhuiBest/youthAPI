@@ -350,7 +350,10 @@ $api->version(
                 ->name('api.user.show');
             $api->get('qq/article/zan/{id}', 'ArticleGoodController@zan')
                 ->name('api.user.show');
-
+            $api->post('qq/personal/attention', 'Fans@store')
+                ->name('api.user.attention');
+            $api->delete('qq/personal/unattention/{id}', 'Fans@destroy')
+                ->name('api.user.unattention');
             /**
              * 资源路由 获取个人全部热点文章及其相关信息(get) <--注：暂时不用  处理数据过多  已经转由分步请求
              * +用户发布文章(post)+修改文章(put)+删除文章(delete)
@@ -372,13 +375,12 @@ $api->version(
             //个人信息页面详情信息获取  文章信息+评论总数+获赞总数
             $api->get('qq/person/publish/articles', 'UserBasicShowController@getPersonallyPublishedArticles')
                 ->name('qq.person.publish.articles');
-             //评论内容+评论者
-             $api->get('qq/comment/about/info/{articleId}', 'UserBasicShowController@getCommentAboutInfo')
-             ->name('qq.comment.about.info');
-             //点赞者信息
-             $api->get('qq/good/about/info/{articleId}', 'UserBasicShowController@getGoodAboutInfo')
-             ->name('qq.good.about.info');
+            //评论内容+评论者
+            $api->get('qq/comment/about/info/{articleId}', 'UserBasicShowController@getCommentAboutInfo')
+                ->name('qq.comment.about.info');
+            //点赞者信息
+            $api->get('qq/good/about/info/{articleId}', 'UserBasicShowController@getGoodAboutInfo')
+                ->name('qq.good.about.info');
         });
     }
 );
-
