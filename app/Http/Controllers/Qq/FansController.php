@@ -9,7 +9,7 @@ use App\Http\Requests\Qq\FansRequest;
 class FansController extends Controller
 {
     
-    public function attention($user_id){
+    public function fan($user_id){
         /**
          * user_id 为当前被关注者id   fan_id为当前操作者的id
          */
