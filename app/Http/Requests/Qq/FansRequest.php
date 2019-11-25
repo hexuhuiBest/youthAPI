@@ -25,7 +25,7 @@ class FansRequest extends FormRequest
     {
         return [
             'user_id' => 'required',
-            'id' => 'required'
+            // 'id' => 'required'
         ];
     }
 }

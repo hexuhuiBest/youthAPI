@@ -18,7 +18,7 @@ class FansController extends Controller
         //找到操作对应的用户
         $operating_user = $this->user()->id;
         //检查fans表中有无信息
-        $user_id = $request->id;
+        $user_id = $request->user_id;
         $data = QqFans::where('user_id', $user_id)
             ->where('fans_id', $operating_user)
             ->first();
