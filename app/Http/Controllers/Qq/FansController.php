@@ -28,7 +28,7 @@ class FansController extends Controller
                 return $this->respond(1, '取消关注成功');
             }
         } else {
-            $data = $request->only(['user_id']);
+            $data['user_id'] = $user_id;
             $data['fans_id'] = $this->user()->id;
             $data = QqFans::create($data);
             return $this->response(1, '关注成功', $data);
