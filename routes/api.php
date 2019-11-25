@@ -350,7 +350,7 @@ $api->version(
                 ->name('api.user.show');
             $api->get('qq/article/zan/{id}', 'ArticleGoodController@zan')
                 ->name('api.user.show');
-            $api->post('qq/personal/attention', 'FansController@attention')
+            $api->post('qq/personal/attention/{$user_id}', 'FansController@attention')
                 ->name('api.user.attention');
             /**
              * 资源路由 获取个人全部热点文章及其相关信息(get) <--注：暂时不用  处理数据过多  已经转由分步请求

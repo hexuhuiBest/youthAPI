@@ -9,7 +9,7 @@ use App\Http\Requests\Qq\FansRequest;
 class FansController extends Controller
 {
     
-    public function attention(FansRequest $request)
+    public function attention($user_id)
     {
         /**
          * user_id 为当前被关注者id   fan_id为当前操作者的id
@@ -18,7 +18,7 @@ class FansController extends Controller
         //找到操作对应的用户
         $operating_user = $this->user()->id;
         //检查fans表中有无信息
-        $user_id = $request->user_id;
+        // $user_id = $request->user_id;
         $data = QqFans::where('user_id', $user_id)
             ->where('fans_id', $operating_user)
             ->first();
