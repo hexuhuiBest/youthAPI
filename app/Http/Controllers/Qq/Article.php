@@ -8,6 +8,7 @@ use App\Http\Requests\UserRequest;
 use App\Models\Artical;
 use App\Models\Image;
 use App\Models\Picture;
+use Auth;
 use App\Models\QqComment;
 use App\Transformers\ArticleTransformer;
 use Illuminate\Http\Request;
