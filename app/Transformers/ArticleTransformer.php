@@ -23,7 +23,7 @@ class ArticleTransformer extends TransformerAbstract
             'pictures' => $this->ImgTransformer($article->pictures),
             'count_comment'=>count(QqComment::where('article_id',$article->id)->get()),
             'count_zan'=>count(QqArticleGood::where('article_id',$article->id)->get()),
-            'is_zan'=>is_null(QqArticleGood::where('article_id',$article->id)->where('user_id',$this->user()->id))?0:1
+            'is_zan'=>is_null(QqArticleGood::where('article_id',$article->id)->where('user_id',Auth::guard('qq')->id))?0:1
             ];
     }
     public function users($imga){
