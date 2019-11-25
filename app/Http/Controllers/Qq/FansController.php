@@ -30,7 +30,7 @@ class FansController extends Controller
             $data['user_id'] = $user_id;
             $data['fans_id'] = $this->user()->id;
             $data = QqFans::create($data);
-            return $this->response(1, '关注成功', $data);
+            return $this->respond(1, '关注成功', $data);
         }
     }
 
