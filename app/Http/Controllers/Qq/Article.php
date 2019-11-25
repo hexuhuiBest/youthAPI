@@ -49,6 +49,7 @@ class Article extends Controller
 
     public function articleList()
     {
+        dd(Auth::guard('qq')->user());
         $article = new QqArticle();
         $article = $article->orderBy('created_at','DESC')->paginate(10);
         return $this->response->paginator($article, new ArticleTransformer());
