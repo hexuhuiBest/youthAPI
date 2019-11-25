@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Qq;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\Qq\FansRequest;
 use App\Http\Controllers\Controller;
 use App\Models\QqFans;
 use Illuminate\Support\Facades\Validator;
@@ -23,7 +24,7 @@ class Fans extends Controller
         // $operating_user = $this->user()->id;
         // $data = QqFans::where('fans_id', $operating_user)
         //     ->get();
-        
+
     }
 
     /**
@@ -42,25 +43,18 @@ class Fans extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FansRequest $request)
     {
         /**
          * user_id 为当前被关注者id   fan_id为当前操作者的id
          */
-        $rules = [
-            'user_id' => 'required',
-            'fans_id' => 'required'
-        ];
 
-        $validator = Validator::make($request->all(), $rules);
+        $data = $request->only(['user_id']);
+        $data['fans_id'] = $this->user()->id;
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
-        }
+        $data = QqFans::create($data);
 
-        $data = QqArticle::create($request->all());
-
-        return response()->json($data, 201);
+        return $this->response(1, '关注成功', $data);
     }
 
     /**
@@ -115,7 +109,19 @@ class Fans extends Controller
         $record_id = $data->id;
         if (!$data) {
             QqFans::find($record_id)->delete();
-            return response()->json(['messg' => 'Unfollow success'], 204);
+            return $this->respond(1, '取消关注成功')->setStatusCode(200);
+        } else {
+            return $this->respond(0, '未查询到关注信息')->setStatusCode(200);
         }
+    }
+
+
+    protected function respond($code, $message, $data = null)
+    {
+        return $this->response->array([
+            'code' => $code,
+            'data' => $data,
+            'message' => $message
+        ]);
     }
 }
