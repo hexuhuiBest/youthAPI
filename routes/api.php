@@ -350,10 +350,8 @@ $api->version(
                 ->name('api.user.show');
             $api->get('qq/article/zan/{id}', 'ArticleGoodController@zan')
                 ->name('api.user.show');
-            $api->post('qq/personal/attention', 'Fans@store')
+            $api->post('qq/personal/attention', 'FansController@attention')
                 ->name('api.user.attention');
-            $api->delete('qq/personal/unattention/{id}', 'Fans@destroy')
-                ->name('api.user.unattention');
             /**
              * 资源路由 获取个人全部热点文章及其相关信息(get) <--注：暂时不用  处理数据过多  已经转由分步请求
              * +用户发布文章(post)+修改文章(put)+删除文章(delete)

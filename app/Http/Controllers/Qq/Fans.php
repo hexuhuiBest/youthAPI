@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Qq;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\Qq\FansRequest;
-use App\Http\Controllers\Controller;
+// use App\Http\Controllers\Controller;
 use App\Models\QqFans;
 use Illuminate\Support\Facades\Validator;
 
