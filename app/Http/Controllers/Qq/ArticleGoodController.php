@@ -17,11 +17,9 @@ class ArticleGoodController extends Controller
                 return $this->respond(1,'取消赞成功');
             }
         }else{
-            $data = array([
-                'user_id' => $this->user()->id,
-                'article_id'=> $id,
-                'comment_id'=>null,
-            ]);
+            $data['user_id'] = $this->user()->id;
+            $data['article_id'] = $id;
+            $data['comment_id'] = null;
             $article = QqArticleGood::create($data);
             if($article){
                 return $this->respond(1,'点赞成功');
