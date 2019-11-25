@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Qq;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\QqArticle;
 use App\Models\QqArticleGood;
 use App\Models\QqComment;

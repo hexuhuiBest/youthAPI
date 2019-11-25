@@ -11,6 +11,7 @@ class FansController extends Controller
     
     public function attention($user_id)
     {
+        dd(1);
         /**
          * user_id 为当前被关注者id   fan_id为当前操作者的id
          */
