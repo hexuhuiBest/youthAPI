@@ -8,7 +8,7 @@ use App\Models\QqArticle;
 use App\Models\QqArticleGood;
 use App\Models\QqComment;
 use App\Models\QqUser;
-use Dingo\Api\Auth\Auth;
+use Auth;
 use Doctrine\DBAL\Schema\Schema;
 use League\Fractal\TransformerAbstract;
 
