@@ -140,8 +140,5 @@ class LoginController extends Controller
         $arr = json_decode($contents, true);
         return $arr;
     }
-
-    protected function getInfo() {
-        
-    }
+    
 }

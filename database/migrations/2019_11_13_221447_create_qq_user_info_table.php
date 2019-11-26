@@ -17,7 +17,6 @@ class CreateQqUserInfoTable extends Migration
             $table->increments('id');
             $table->string('name', 20);
             $table->string('school', 50);
-            // $table->string('qqapp_openid');
             $table->integer('offical')->nullable();
             $table->integer('sex')->default(1);
             $table->text('des')->nullable();

@@ -10,7 +10,7 @@ class QqArticle extends Model
 
     protected $guarded = ['id'];
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     //关联作者模型 （一对一）一篇文章一位作者
     public function QqUserBasic() {
