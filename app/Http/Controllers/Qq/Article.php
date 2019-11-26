@@ -57,7 +57,7 @@ class Article extends Controller
     }
     public function zanArticle()
     {
-        $zans = QqArticleGood::where('user_id',$this->user()->id)->pluck('article_id');
+        $zans = QqArticleGood::where('user_id',$this->user()->id)->pluck('article_id')->get();
         dd($zans);
         $article = new QqArticle();
         $article = $article->orderBy('created_at','DESC')->paginate(10);
