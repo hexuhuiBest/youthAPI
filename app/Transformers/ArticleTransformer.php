@@ -20,7 +20,7 @@ class ArticleTransformer extends TransformerAbstract
         return [
             'id' => $article->id,
             'content' => $article->content,
-            'updated_at' => $article->updated_at,
+            'updated_at' => $article->updated_at->toDateTimeString(),
             'user_info' => $this->users($article->user_id),
             'pictures' => $this->ImgTransformer($article->pictures),
             'count_comment' => count(QqComment::where('article_id', $article->id)->get()),
