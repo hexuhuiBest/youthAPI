@@ -46,7 +46,7 @@ class ArticleTransformer extends TransformerAbstract
         if (!is_null($imga)) {
             foreach (json_decode($imga) as $key => $item) {
                 $img = Picture::find($item);
-                $imgs[$key] = $img->path;
+                $array[$key] = $img->path;
             }
         }
         return $array;
