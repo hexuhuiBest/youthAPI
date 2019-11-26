@@ -19,7 +19,8 @@ class ArticleTransformer extends TransformerAbstract
         return [
             'id' => $article->id,
             'content'=>$article->content,
-            'user_id'=>$this->users($article->user_id),
+            'updated_at' =>$article->updated_at,
+            'user_info'=>$this->users($article->user_id),
             'pictures' => $this->ImgTransformer($article->pictures),
             'count_comment'=>count(QqComment::where('article_id',$article->id)->get()),
             'count_zan'=>count(QqArticleGood::where('article_id',$article->id)->get()),
@@ -32,7 +33,8 @@ class ArticleTransformer extends TransformerAbstract
         return [
             'user_id'=>$imga->id,
             'nickName'=>$imga->nickName,
-            'avatarUrl'=>$imga->avatarUrl
+            'avatarUrl'=>$imga->avatarUrl,
+            'gender' =>$imga->gender,
         ];
     }
     public function ImgTransformer($imga)
