@@ -55,6 +55,13 @@ class Article extends Controller
         $article = $article->orderBy('created_at','DESC')->paginate(10);
         return $this->response->paginator($article, new ArticleTransformer());
     }
+    public function typeArticleList($type)
+    {
+
+        $article = new QqArticle();
+        $article = $article->where('type',$type)->orderBy('created_at','DESC')->paginate(10);
+        return $this->response->paginator($article, new ArticleTransformer());
+    }
     public function meArticle($id)
     {
 
