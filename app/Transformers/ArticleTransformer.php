@@ -32,7 +32,7 @@ class ArticleTransformer extends TransformerAbstract
     public function users($imga)
     {
         $imga = QqUser::find($imga);
-         $imgas = QqUserBasic::where('user_id',$imga->id)->get();
+         $imgas = QqUserBasic::where('user_id',$imga->id);
         return [
             'user_id' => $imga->id,
             'nickName' => $imga->nickName,
