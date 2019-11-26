@@ -7,6 +7,7 @@ use App\Models\QqArticle;
 use App\Models\QqFans;
 use App\Models\QqUser;
 use App\Models\QqUserBasic;
+use Auth;
 use League\Fractal\TransformerAbstract;
 
 class QqUserTransformer extends TransformerAbstract
