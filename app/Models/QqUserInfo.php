@@ -18,7 +18,7 @@ class QqUserInfo extends Model
         'tag',
         'level'
     ];
-    public $timestamps = false;
+    // public $timestamps = false;
 
     //模型的关联操作：关联文章模型 （一对多）
     public function QqArticle()

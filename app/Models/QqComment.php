@@ -10,7 +10,7 @@ class QqComment extends Model
 
     protected $guarded = ['id'];
     
-    public $timestamps = false;
+    // public $timestamps = false;
 
      //关联文章模型 （一对一）一条评论对应一篇文章
      public function QqArticle() {
