@@ -346,7 +346,7 @@ $api->version(
                 ->name('api.user.show');
             $api->get('qq/article/list/show', 'Article@articleList')
                 ->name('api.user.show');
-            $api->get('qq/article/{type}/list', 'Article@typeArticleList')
+            $api->post('qq/article/type/list', 'Article@typeArticleList')
                 ->name('api.user.show');
             $api->get('qq/article/delete/{id}', 'Article@delete')
                 ->name('api.user.show');
