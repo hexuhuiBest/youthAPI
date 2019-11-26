@@ -350,7 +350,7 @@ $api->version(
                 ->name('api.user.show');
             $api->get('qq/article/list/show', 'Article@articleList')
                 ->name('api.user.show');
-            $api->get('qq/article/good/list', 'Article@zanArticle')
+            $api->get('qq/good/article/list', 'Article@zanArticle')
                 ->name('api.user.show');
             $api->post('qq/article/type/list', 'Article@typeArticleList')
                 ->name('api.user.show');
