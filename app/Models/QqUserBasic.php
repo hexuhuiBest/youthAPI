@@ -23,7 +23,8 @@ class QqUserBasic extends Model
     }
 
     //关联粉丝   一个用户有多个粉丝
-    public function QqFans() {
+    public function QqFans()
+    {
         return $this->hasMany('App\Models\QqFans', 'fans_id', 'id');
     }
 }
