@@ -340,7 +340,11 @@ $api->version(
             $api->post('qq/picture', 'Article@pictStore')
                 ->name('api.user.show');
             $api->post('qq/article/comment', 'Comment@store')
-                ->name('api.user.show');
+                ->name('api.user.comment.show');
+            $api->post('qq/article/comment/updata', 'Comment@update')
+                ->name('api.user.comment.updata');
+            $api->post('qq/article/comment/delete', 'Comment@destroy')
+                ->name('api.user.comment.delete');
 
             $api->get('qq/article/show/{id}', 'Article@show')
                 ->name('api.user.show');

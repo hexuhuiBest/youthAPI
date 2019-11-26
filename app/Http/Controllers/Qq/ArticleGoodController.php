@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Qq;
 
+use App\Models\QqArticle;
 use App\Models\QqArticleGood;
 use Illuminate\Http\Request;
 
@@ -26,6 +27,15 @@ class ArticleGoodController extends Controller
             }
         }
     }
+
+    public function zanedList() {
+        // $user_id = $this->user()->id;
+        // $article = QqArticle::where('user_id', )->count();
+        $article = new QqArticle();
+        $article = $article->orderBy('created_at','DESC')->paginate(10);
+        return $this->response->paginator($article, new ArticleTransformer());
+    }
+
     protected function respond($code,$message,$data=null)
     {
         return $this->response->array([

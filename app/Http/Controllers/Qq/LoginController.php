@@ -103,8 +103,6 @@ class LoginController extends Controller
         }
     }
 
-
-
     protected function respondWithToken($token)
     {
         $data = array([
@@ -141,5 +139,9 @@ class LoginController extends Controller
         $contents = $body->getContents();
         $arr = json_decode($contents, true);
         return $arr;
+    }
+
+    protected function getInfo() {
+        
     }
 }

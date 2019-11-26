@@ -31,7 +31,7 @@ class ArticleTransformer extends TransformerAbstract
         $imga = QqUser::find($imga);
         return [
             'user_id'=>$imga->id,
-            'nickname'=>$imga->nickName,
+            'nickName'=>$imga->nickName,
             'avatarUrl'=>$imga->avatarUrl
         ];
     }
