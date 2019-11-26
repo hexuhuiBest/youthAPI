@@ -59,7 +59,8 @@ class Article extends Controller
     {
         $zans = QqArticleGood::where('user_id', $this->user()->id)->pluck('article_id')->toArray();
         $article = new QqArticle();
-        $article = $article->whereIn('id', $zans)->orderBy('created_at', 'DESC')->paginate(10);
+        $article = $article->whereIn('id', $zans)->orderBy('created_at', 'DESC')->get();
+        dd($article);
         return $this->response->paginator($article, new ArticleTransformer());
     }
     public function typeArticleList(Request $request)
