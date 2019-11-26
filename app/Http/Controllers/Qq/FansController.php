@@ -42,7 +42,7 @@ class FansController extends Controller
         return $this->response->paginator($fans, new FanedTransformer());
     }
 
-    public function fanList()
+    public function fansList()
     {
         $fans = QqFans::where('user_id',$this->user()->id)->orderBy('created_at','DESC')->paginate(10);
         return $this->response->paginator($fans, new FansTransformer());
