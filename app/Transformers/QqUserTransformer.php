@@ -17,12 +17,12 @@ class QqUserTransformer extends TransformerAbstract
         $data = QqUserBasic::where('user_id',$user->id)->first();
         return [
             'id' => $user->id,
-            'school' => $user->school,
-            'offical' => $user->offical,
-            'sex' => $user->sex,
-            'des' => $user->des,
-            'tags' => $user->tags,
-            'level'=>$user->level,
+            'school' => $data->school,
+            'offical' => $data->offical,
+            'sex' => $data->sex,
+            'des' => $data->des,
+            'tags' => $data->tags,
+            'level'=>$data->level,
             'gender'=>$data->gender,
             'language'=>$data->language,
             'city'=>$data->city,
