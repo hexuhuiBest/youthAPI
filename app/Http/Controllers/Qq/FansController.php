@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Qq;
 
+use App\Transformers\FanedTransformer;
+use App\Transformers\FansTransformer;
 use Illuminate\Http\Request;
 use App\Models\QqFans;
 use App\Http\Requests\Qq\FansRequest;
@@ -34,23 +36,17 @@ class FansController extends Controller
         }
     }
 
-    // public function unattention($id)
-    // {
-    //     //传过来的参数为当前文章作者id
-    //     //找到操作对应的用户
-    //     $operating_user = $this->user()->id;
-    //     //检查fans表中有无信息
-    //     $data = QqFans::where('user_id', $id)
-    //         ->where('fans_id', $operating_user)
-    //         ->first();
-    //     $record_id = $data->id;
-    //     if (!$data) {
-    //         QqFans::find($record_id)->delete();
-    //         return $this->respond(1, '取消关注成功')->setStatusCode(200);
-    //     } else {
-    //         return $this->respond(0, '未查询到关注信息')->setStatusCode(200);
-    //     }
-    // }
+    public function fanedList()
+    {
+         $fans = QqFans::where('fans_id',$this->user()->id)->orderBy('created_at','DESC')->paginate(10);
+        return $this->response->paginator($fans, new FanedTransformer());
+    }
+
+    public function fanList()
+    {
+        $fans = QqFans::where('user_id',$this->user()->id)->orderBy('created_at','DESC')->paginate(10);
+        return $this->response->paginator($fans, new FansTransformer());
+    }
 
     protected function respond($code, $message, $data = null)
     {
