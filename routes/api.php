@@ -356,7 +356,7 @@ $api->version(
                 ->name('api.user.attention');
             $api->get('qq/faned', 'FansController@fanedList')
                 ->name('api.user.attention');
-            $api->get('qq/me/article/list', 'Article@meArticle')
+            $api->get('qq/me/article/list/{id}', 'Article@meArticle')
                 ->name('api.user.attention');
             /**
              * 资源路由 获取个人全部热点文章及其相关信息(get) <--注：暂时不用  处理数据过多  已经转由分步请求
