@@ -343,7 +343,7 @@ $api->version(
                 ->name('api.user.comment.show');
             $api->post('qq/article/comment/updata', 'Comment@update')
                 ->name('api.user.comment.updata');
-            $api->post('qq/article/comment/delete', 'Comment@destroy')
+            $api->post('qq/article/comment/delete/{id}', 'Comment@destroy')
                 ->name('api.user.comment.delete');
 
             $api->get('qq/article/show/{id}', 'Article@show')
