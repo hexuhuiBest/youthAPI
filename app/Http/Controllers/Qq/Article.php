@@ -57,6 +57,7 @@ class Article extends Controller
     }
     public function zanArticle()
     {
+        dd(1);
         $zans = QqArticleGood::where('user_id',$this->user()->id)->get();
         dd($zans);
         $article = new QqArticle();
