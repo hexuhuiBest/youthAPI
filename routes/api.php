@@ -366,6 +366,11 @@ $api->version(
                 ->name('api.user.attention');
             $api->get('qq/me/article/list/{id}', 'Article@meArticle')
                 ->name('api.user.attention');
+            $api->get('qq/article/collect', 'CollectController@collectOrNot')
+                ->name('api.article.collection.show');
+            $api->get('qq/article/collection/list', 'CollectController@collectionList')
+                ->name('api.article.collection.show');
+
             /**
              * 资源路由 获取个人全部热点文章及其相关信息(get) <--注：暂时不用  处理数据过多  已经转由分步请求
              * +用户发布文章(post)+修改文章(put)+删除文章(delete)
